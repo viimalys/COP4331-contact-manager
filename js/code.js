@@ -1,4 +1,4 @@
-const urlBase = 'http://COP4331-5.com/LAMPAPI';
+const urlBase = 'http://poos-team-20.xyz//LAMPAPI';
 const extension = 'php';
 
 let userId = 0;
@@ -95,7 +95,8 @@ function readCookie()
 	}
 	else
 	{
-		document.getElementById("userName").innerHTML = "Logged in as " + firstName + " " + lastName;
+		//will crash the system occasionally
+		//document.getElementById("userName").innerHTML = "Logged in as " + firstName + " " + lastName;
 	}
 }
 
@@ -108,6 +109,7 @@ function doLogout()
 	window.location.href = "index.html";
 }
 
+//change to add contact
 function addColor()
 {
 	let newColor = document.getElementById("colorText").value;
@@ -139,6 +141,7 @@ function addColor()
 	
 }
 
+//change to search contact
 function searchColor()
 {
 	let srch = document.getElementById("searchText").value;
