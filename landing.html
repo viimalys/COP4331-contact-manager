@@ -1,0 +1,60 @@
+<html lang="en-US" dir="ltr">
+
+<head>
+	<meta charset="utf-8">
+	<title>TidalTies Landing Page</title>
+	<script type="text/javascript" src="js/md5.js"></script>
+	<script type="text/javascript" src="js/code.js"></script>
+	<link href="css/styles.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+</head>
+
+<body>
+
+    <h1 id="title">TidalTies Contact List</h1>
+    <div id="searchBar"><input type="text" placeholder="Search Contacts"></div>
+    <div id="featureButtons">
+        <button type="button" id="addButton" class="buttons" onclick="showAddContactForm()">Add New Contact</button>
+        <form id="addContactForm">
+            <p>
+                <label for="First Name"><b>First Name</b></label>
+                <input id="firstNameInput" placeholder="Enter First Name" name="firstNameInput" required>
+            </p>
+            <p>
+                <label for="Last Name"><b>Last Name</b></label>
+                <input id="lastNameInput" placeholder="Enter Last Name" name="lastNameInput" required>
+            </p>
+            <p>
+                <label for="email"><b>Email</b></label>
+                <input id="emailInput" placeholder="Enter Email Address" name="emailInput" required>
+            </p>
+            <p>
+                <label for="phone"><b>Phone</b></label>
+                <input id="phoneInput" placeholder="Enter Phone Number" name="phoneInput" required>
+            </p>
+            <button type="button" class="buttons" onclick ="addContactInfo()">Add Contact</button>
+            <button type="button" class="buttons" onclick="hideAddContactForm()">Cancel</button>
+        </form>
+    </div>
+
+    <div id="contactsDiv">
+        <table>
+            <tbody id="tableBody">
+                <tr>
+                    <th>First</th>
+                    <th>Last</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                </tr>
+                <tr>
+                    <td>Vimalys</td><td>Rivera</td><td>vr@ucf.edu</td><td>vr123</td>
+                </tr>
+                <tr>
+                    <td>Tyler</td><td>Halfpenny</td><td>th@ucf.edu</td><td>th123</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

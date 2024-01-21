@@ -40,6 +40,15 @@ body
     background-color: #b2b2b2;
 }
 
+#contactsDiv
+{
+    font-size: 30px;
+    width: 70%;
+    margin-left: 15%;
+    padding: 25px;
+    background-color: #b2b2b2;
+}
+
 #backToLoginDiv
 {
     font-size: 30px;
@@ -76,10 +85,22 @@ body
     font-family: 'Ubuntu', sans-serif;
 }
 
-.buttons:hover{
+.buttons:hover
+{
     background-color: #00d5124f;
     color: #FFFFFF;
     opacity: 50%;
+}
+
+.table, th, td, tr
+{
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+#addContactForm
+{
+    display: none;
 }
 
 #firstName

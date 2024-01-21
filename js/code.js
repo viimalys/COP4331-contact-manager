@@ -141,6 +141,40 @@ function addColor()
 	
 }
 
+function showAddContactForm()
+{
+	document.getElementById("addContactForm").style.display="block";
+}
+
+function hideAddContactForm()
+{
+	document.getElementById("addContactForm").style.display="none";
+}
+
+function addContactInfo()
+{
+	var tmpFirstName = document.getElementById("firstNameInput").value;
+	var tmpLastName = document.getElementById("lastNameInput").value;
+	var tmpEmail = document.getElementById("emailInput").value;
+	var tmpPhone = document.getElementById("phoneInput").value;
+	tempAddRow(tmpFirstName, tmpLastName, tmpEmail, tmpPhone);
+}
+
+function tempAddRow(tmpFirstName, tmpLastName, tmpEmail, tmpPhone)
+{
+	var table = document.getElementById("tableBody");
+	var rowCount = table.rows.length;
+	var row = table.insertRow(rowCount);
+	var cell1 = row.insertCell(0);
+	var cell2 = row.insertCell(1);
+	var cell3 = row.insertCell(2);
+	var cell4 = row.insertCell(3);
+	cell1.innerHTML = tmpFirstName;
+	cell2.innerHTML = tmpLastName;
+	cell3.innerHTML = tmpEmail;
+	cell4.innerHTML = tmpPhone;
+}
+
 //change to search contact
 function searchColor()
 {
