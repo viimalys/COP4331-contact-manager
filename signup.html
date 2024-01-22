@@ -11,15 +11,17 @@
 
 <body>
 
-	<h1 id="title">Join the TidalTies Crew!</h1>
-
 	<div id="registerDiv">
+		<h1 id="title">Join the TidalTies Crew!</h1>
 		<form id="registerForm">
 			<h2 id="inner-title">Set sail by registering now.</h2>
             <input type="text" id="firstName" placeholder="First Name" required /><br />
             <input type="text" id="lastName" placeholder="Last Name" required /><br />
 			<input type="text" id="loginName" placeholder="Username" required /><br />
-			<input type="password" id="loginPassword" placeholder="Password" required /><br />
+			<div class="password-container">
+				<input type="password" id="loginPassword" placeholder="Password" oninput="togglePasswordToggle()" required />
+				<span class="password-toggle" onclick="togglePasswordVisibility('loginPassword')">Show</span><br />
+			</div>
 			<button type="submit" id="signupButton" class="buttons" onclick="">Sign Up </button>
 			<span id="signupResult"></span>
 		</form>
@@ -32,5 +34,3 @@
 	</div>
 
 </body>
-
-</html>
