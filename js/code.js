@@ -76,6 +76,22 @@ function togglePasswordToggle() {
 	}
 }
 
+document.getElementById('firstName').addEventListener('focus', function() {
+    lightenPlaceholderColor('firstName');
+});
+
+document.getElementById('firstName').addEventListener('blur', function() {
+    restorePlaceholderColor('firstName');
+});
+
+document.getElementById('lastName').addEventListener('focus', function() {
+    lightenPlaceholderColor('lastName');
+});
+
+document.getElementById('lastName').addEventListener('blur', function() {
+    restorePlaceholderColor('lastName');
+});
+
 document.getElementById('loginName').addEventListener('focus', function() {
     lightenPlaceholderColor('loginName');
 });
