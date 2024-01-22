@@ -76,37 +76,51 @@ function togglePasswordToggle() {
 	}
 }
 
-document.getElementById('firstName').addEventListener('focus', function() {
-    lightenPlaceholderColor('firstName');
-});
+const loginNameElement = document.getElementById('loginName');
+const loginPasswordElement = document.getElementById('loginPassword');
 
-document.getElementById('firstName').addEventListener('blur', function() {
-    restorePlaceholderColor('firstName');
-});
+if (loginNameElement) {
+    loginNameElement.addEventListener('focus', function () {
+        lightenPlaceholderColor('loginName');
+    });
 
-document.getElementById('lastName').addEventListener('focus', function() {
-    lightenPlaceholderColor('lastName');
-});
+    loginNameElement.addEventListener('blur', function () {
+        restorePlaceholderColor('loginName');
+    });
+}
 
-document.getElementById('lastName').addEventListener('blur', function() {
-    restorePlaceholderColor('lastName');
-});
+if (loginPasswordElement) {
+    loginPasswordElement.addEventListener('focus', function () {
+        lightenPlaceholderColor('loginPassword');
+    });
 
-document.getElementById('loginName').addEventListener('focus', function() {
-    lightenPlaceholderColor('loginName');
-});
+    loginPasswordElement.addEventListener('blur', function () {
+        restorePlaceholderColor('loginPassword');
+    });
+}
 
-document.getElementById('loginName').addEventListener('blur', function() {
-    restorePlaceholderColor('loginName');
-});
+const firstNameElement = document.getElementById('firstName');
+const lastNameElement = document.getElementById('lastName');
 
-document.getElementById('loginPassword').addEventListener('focus', function() {
-    lightenPlaceholderColor('loginPassword');
-});
+if (firstNameElement) {
+    firstNameElement.addEventListener('focus', function () {
+        lightenPlaceholderColor('firstName');
+    });
 
-document.getElementById('loginPassword').addEventListener('blur', function() {
-    restorePlaceholderColor('loginPassword');
-});
+    firstNameElement.addEventListener('blur', function () {
+        restorePlaceholderColor('firstName');
+    });
+}
+
+if (lastNameElement) {
+    lastNameElement.addEventListener('focus', function () {
+        lightenPlaceholderColor('lastName');
+    });
+
+    lastNameElement.addEventListener('blur', function () {
+        restorePlaceholderColor('lastName');
+    });
+}
 
 function lightenPlaceholderColor(inputId) {
     const inputElement = document.getElementById(inputId);
