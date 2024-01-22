@@ -207,6 +207,12 @@ body
     border-radius: 40px;
     color: #FFFFFF;
 }
+
+#loginName:focus::placeholder,
+#loginPassword:focus::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
 #searchText
 {
 	font-size: 30px;
@@ -295,5 +301,22 @@ select{
 }
 
 ::placeholder{
-    color:whitesmoke;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.password-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.password-toggle {
+    cursor: pointer;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    color: #FFFFFF;
+    display: none;
 }

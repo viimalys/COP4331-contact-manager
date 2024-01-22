@@ -17,7 +17,12 @@
 		<form id="loginForm">
 			<h2 id="inner-title">Log in for a sea of connections.</h2>
 			<input type="text" id="loginName" placeholder="Username" required /><br />
-			<input type="password" id="loginPassword" placeholder="Password" required /><br />
+
+			<div class="password-container">
+				<input type="password" id="loginPassword" placeholder="Password" oninput="togglePasswordToggle()" required />
+				<span class="password-toggle" onclick="togglePasswordVisibility('loginPassword')">Show</span><br />
+			</div>
+
 			<button type="submit" id="loginButton" class="buttons" onclick="doLogin();">Log In </button>
 			<span id="loginResult"></span>
 		</form>
