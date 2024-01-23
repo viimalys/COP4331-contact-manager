@@ -41,7 +41,7 @@ function doLogin() {
 
 				saveCookie();
 
-				window.location.href = "color.html";
+				window.location.href = "Landing.html";
 			}
 		};
 		xhr.send(jsonPayload);
@@ -151,7 +151,7 @@ function doRegister() {
 	//	var tmp = {login:login,password:hash};
 	let jsonPayload = JSON.stringify(tmp);
 
-	let url = urlBase + '/Register.' + extension;
+	let url = urlBase + '/NewRegister.' + extension;
 
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST", url, true);
@@ -172,7 +172,7 @@ function doRegister() {
 
 				saveCookie();
 
-				window.location.href = "color.html";
+				window.location.href = "Landing.html";
 			}
 		};
 		xhr.send(jsonPayload);
