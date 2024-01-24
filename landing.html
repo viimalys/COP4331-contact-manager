@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en-US" dir="ltr">
 
 <head>
@@ -15,7 +16,7 @@
     <div id="searchBar"><input type="text" placeholder="Search Contacts"></div>
     <div id="featureButtons">
         <button type="button" id="addButton" class="buttons" onclick="showAddContactForm()">Add New Contact</button>
-        <form id="addContactForm">
+        <div id="addContactForm">
             <p>
                 <label for="First Name"><b>First Name</b></label>
                 <input id="firstNameInput" placeholder="Enter First Name" name="firstNameInput" required>
@@ -25,16 +26,16 @@
                 <input id="lastNameInput" placeholder="Enter Last Name" name="lastNameInput" required>
             </p>
             <p>
-                <label for="email"><b>Email</b></label>
-                <input id="emailInput" placeholder="Enter Email Address" name="emailInput" required>
-            </p>
-            <p>
                 <label for="phone"><b>Phone</b></label>
                 <input id="phoneInput" placeholder="Enter Phone Number" name="phoneInput" required>
             </p>
+            <p>
+                <label for="email"><b>Email</b></label>
+                <input id="emailInput" placeholder="Enter Email Address" name="emailInput" required>
+            </p>
             <button type="button" class="buttons" onclick ="addContactInfo()">Add Contact</button>
             <button type="button" class="buttons" onclick="hideAddContactForm()">Cancel</button>
-        </form>
+        </div>
     </div>
 
     <div id="contactsDiv">

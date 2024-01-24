@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en-US" dir="ltr">
 
 <head>
@@ -14,7 +15,7 @@
 
 	<div id="loginDiv">
 		<h1 id="title">Welcome to TidalTies!</h1>
-		<form id="loginForm">
+		<div id="loginForm">
 			<h2 id="inner-title">Log in for a sea of connections.</h2>
 			<input type="text" id="loginName" placeholder="Username" required /><br />
 
@@ -25,12 +26,12 @@
 
 			<button type="submit" id="loginButton" class="buttons" onclick="doLogin();">Log In </button>
 			<span id="loginResult"></span>
-		</form>
+		</div>
 	</div>
 
 
 	<div id="signupDiv">
-		<span id="signupText">Don't have an account?</span>
+		<span id="signupText">Don't have an account?</span><br />
 		<button type="button" id="signupButton" class="buttons" onclick="window.location.href = 'signup.html';">Register</button>
 	</div>
 
