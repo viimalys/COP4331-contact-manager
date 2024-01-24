@@ -211,43 +211,6 @@ function doRegister() {
 	}
 }
 
-function addContact(){
-	let url = urlBase + './Create' + extension;
-
-	let xhr = new XMLHttpRequest();
-
-	xhr.open("POST", url, true)
-	
-	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8")
-
-	try{
-
-	xhr.send(jsonPayload)
-	}
-	catch{
-
-	}
-
-
-}
-
-function tableFromMYSQL()
-{
-	let tmp = {firstName: firstName, lastName: lastName, phone: phone, email: email}
-	let jsonPayload = JSON.stringify(tmp);
-
-	let url = urlBase + './Search' + extension;
-
-	let xhr = new XMLHttpRequest();
-
-	xhr.open("POST", url, true) //POST or GET?
-
-	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8")
-
-	//try/catch statement for 
-
-}
-
 function saveCookie() {
 	let minutes = 20;
 	let date = new Date();
@@ -303,7 +266,9 @@ function addContactInfo() {
 	var tmpLastName = document.getElementById("lastNameInput").value;
 	var tmpEmail = document.getElementById("emailInput").value;
 	var tmpPhone = document.getElementById("phoneInput").value;
+	addContact();
 	tempAddRow(tmpFirstName, tmpLastName, tmpEmail, tmpPhone);
+	hideAddContactForm();
 }
 
 function tempAddRow(tmpFirstName, tmpLastName, tmpEmail, tmpPhone) {
@@ -318,4 +283,64 @@ function tempAddRow(tmpFirstName, tmpLastName, tmpEmail, tmpPhone) {
 	cell2.innerHTML = tmpLastName;
 	cell3.innerHTML = tmpEmail;
 	cell4.innerHTML = tmpPhone;
+}
+
+function addContact(){
+	firstName = "";
+	lastName = "";
+	phone = "";
+	email = "";
+	userId = "";
+
+	let firstName = document.getElementById("firstNameInput").value;
+	let lastName = document.getElementById("lastNameInput").value;
+	let phone = document.getElementById("phoneInput").value;
+	let email = document.getElementById("emailInput").value;
+
+	// Create a JavaScript object containing user data
+	let userData = {
+		firstName: firstName,
+		lastName: lastName,
+		phone: phone,
+		email: email,
+		userId: userId
+	};
+
+	// Convert the user data object to a JSON string
+	let jsonPayload = JSON.stringify(userData);
+
+	let url = urlBase + '/Create.' + extension;
+
+	let xhr = new XMLHttpRequest();
+
+	xhr.open("POST", url, true)
+	
+	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8")
+
+	try{
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState == 4) {
+				if (xhr.status == 200) {
+					// Parse the JSON response from the server
+					let jsonObject = JSON.parse(xhr.responseText);
+
+					// Extract user ID from the response
+					userId = jsonObject.id;
+
+					// Check if contact creation was successful
+					if (userId < 1) {
+						// error creating new contact
+					} else {
+						// contact creation success, refresh table
+					}
+				} else {
+					// error handling
+				}
+			}
+		};
+	xhr.send(jsonPayload)
+	}
+	catch (err) {
+		// error message
+	}
 }
