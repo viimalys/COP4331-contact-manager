@@ -1,6 +1,7 @@
 const urlBase = 'http://poos-team-20.xyz/LAMPAPI';
 const extension = 'php';
 
+let loginSessionID = 0;
 let userId = 0;
 let firstName = "";
 let lastName = "";
@@ -161,7 +162,7 @@ function doRegister() {
 	let jsonPayload = JSON.stringify(userData);
 
 	// Define the URL for the registration endpoint on the server
-	let url = urlBase + '/NewRegister.' + extension;
+	let url = urlBase + '/Register.' + extension;
 
 	// Create a new XMLHttpRequest object
 	let xhr = new XMLHttpRequest();
@@ -267,11 +268,13 @@ function addContactInfo() {
 	var tmpEmail = document.getElementById("emailInput").value;
 	var tmpPhone = document.getElementById("phoneInput").value;
 	addContact();
-	tempAddRow(tmpFirstName, tmpLastName, tmpEmail, tmpPhone);
+	console.log(tmpFirstName, tmpLastName, tmpPhone, tmpEmail);
+	//tempAddRow(tmpFirstName, tmpLastName, tmpEmail, tmpPhone);
 	hideAddContactForm();
+	readContacts();
 }
 
-function tempAddRow(tmpFirstName, tmpLastName, tmpEmail, tmpPhone) {
+function addContactRow(tmpFirstName, tmpLastName, tmpPhone, tmpEmail) {
 	var table = document.getElementById("tableBody");
 	var rowCount = table.rows.length;
 	var row = table.insertRow(rowCount);
@@ -279,23 +282,21 @@ function tempAddRow(tmpFirstName, tmpLastName, tmpEmail, tmpPhone) {
 	var cell2 = row.insertCell(1);
 	var cell3 = row.insertCell(2);
 	var cell4 = row.insertCell(3);
+	var cell5 = row.insertCell(4);
 	cell1.innerHTML = tmpFirstName;
 	cell2.innerHTML = tmpLastName;
-	cell3.innerHTML = tmpEmail;
-	cell4.innerHTML = tmpPhone;
+	cell3.innerHTML = tmpPhone;
+	cell4.innerHTML = tmpEmail;
+	//cell5.innerHTML =  "<td>" + "<button type='button' onclick='deleteContact("+ i +")' " + Delete + "</button>" + "</td>";
+	hideAddContactForm();
 }
 
 function addContact(){
-	firstName = "";
-	lastName = "";
-	phone = "";
-	email = "";
-	userId = "";
-
 	let firstName = document.getElementById("firstNameInput").value;
 	let lastName = document.getElementById("lastNameInput").value;
 	let phone = document.getElementById("phoneInput").value;
 	let email = document.getElementById("emailInput").value;
+	var table = document.getElementById("tableBody");
 
 	// Create a JavaScript object containing user data
 	let userData = {
@@ -306,41 +307,90 @@ function addContact(){
 		userId: userId
 	};
 
+	//console.log(userData);
 	// Convert the user data object to a JSON string
 	let jsonPayload = JSON.stringify(userData);
-
 	let url = urlBase + '/Create.' + extension;
-
 	let xhr = new XMLHttpRequest();
-
-	xhr.open("POST", url, true)
-	
+	xhr.open("POST", url, true);
 	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8")
-
 	try{
 		xhr.onreadystatechange = function () {
 			if (xhr.readyState == 4) {
 				if (xhr.status == 200) {
-					// Parse the JSON response from the server
-					let jsonObject = JSON.parse(xhr.responseText);
-
-					// Extract user ID from the response
-					userId = jsonObject.id;
-
-					// Check if contact creation was successful
-					if (userId < 1) {
-						// error creating new contact
-					} else {
-						// contact creation success, refresh table
-					}
+					// something
 				} else {
 					// error handling
 				}
 			}
 		};
-	xhr.send(jsonPayload)
+	xhr.send(jsonPayload);
+	addContactRow(firstName, lastName, phone, email);
 	}
 	catch (err) {
 		// error message
 	}
+}
+
+function deleteContact(row){
+	let userData = {
+		firstName: firstName,
+		lastName: lastName,
+	};
+	let jsonPayload = JSON.stringify(userData);
+	let url = urlBase + '/Delete.' + extension;
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8")
+	try{
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState == 4) {
+				if (xhr.status == 200) {
+					// something
+				} else {
+					// error handling
+				}
+			}
+		};
+	xhr.send(jsonPayload);
+	}
+	catch (err) {
+		// error message
+	}
+}
+
+function readContacts(){
+	//alert("Page Loaded! Getting Contacts!");
+	let url = urlBase + '/Read.' + extension;
+	let xhr = new XMLHttpRequest();
+	xhr.open("GET", url, true);
+	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8")
+	xhr.onreadystatechange = function () {
+		if (xhr.readyState == 4) {
+			if (xhr.status == 200) {
+      // The request has been completed successfully
+      //console.log(xhr.responseText);
+	  //alert("ready!");
+	  let jsonData = JSON.parse(xhr.responseText);
+	  //console.log(jsonData);
+	  //console.log(jsonData.length);
+	  console.log("Login Session ID: " + loginSessionID)
+	  for(i=0; i<jsonData.length; i++){
+		console.log(jsonData[i]);
+		console.log(typeof(jsonData[i].UserID));
+		let jsonUserIDstr = jsonData[i].UserID;
+		let jsonUserIDint = parseInt(jsonUserIDstr, 10);
+		console.log(jsonUserIDint);
+		console.log(typeof(jsonUserIDint));
+		if(loginSessionID == jsonUserIDint)
+		{
+			addContactRow(jsonData[i].FirstName, jsonData[i].LastName, jsonData[i].Phone, jsonData[i].Email);
+		}
+	  }
+    } else {
+      // Oh no! There has been an error with the request!
+    }
+  }
+};
+xhr.send();
 }
