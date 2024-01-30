@@ -18,14 +18,14 @@
 	else
 	{
         // Checking if the person already exists in Contacts before continuing.
-        $stmt = $conn->prepare("SELECT ID FROM Contacts WHERE FirstName = ? AND LastName = ?");
-        $stmt->bind_param("ss", $inData["firstName"], $inData["lastName"]);
+        $stmt = $conn->prepare("SELECT ID FROM Contacts WHERE userId = ? and firstName = ? and lastName = ?");
+        $stmt->bind_param("sss", $inData["userId"], $inData["firstName"], $inData["lastName"]);
         $stmt->execute();
         $result = $stmt->get_result();
     
         if($result->num_rows > 0)
         {
-            returnWithError("This Person Already Exists in Contacts");
+            returnWithError("This Person Already Exists in This User's Contacts");
         }
         else
         {

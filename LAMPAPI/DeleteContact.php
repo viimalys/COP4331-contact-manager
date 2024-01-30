@@ -26,7 +26,7 @@
         }
         else
         {
-            returnWithError("Contact Deleted or No Contact Found");
+            returnWithError("No Contact Found");
         }
     }
 	
