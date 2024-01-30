@@ -1,39 +1,52 @@
+<!DOCTYPE html>
 <html lang="en-US" dir="ltr">
 
 <head>
 	<meta charset="utf-8">
-	<title>TidalTies Log In</title>
+	<title>TidalTies</title>
 	<script type="text/javascript" src="js/md5.js"></script>
 	<script type="text/javascript" src="js/code.js"></script>
 	<link href="css/styles.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 </head>
 
-<body>
+<body class="home">
+	<header>
+		<div class="banner">
+			<nav>
+				<div class="logo">
+					<a href="index.html">TidalTies</a>
+				</div>
+				<div class="left-links">
+					<a href="#">About us</a>
+					<a href="login.html">Login</a>
+					<a href="signup.html">Sign Up</a>
+				</div>
+			</nav>
+		</div>
+	</header>
 
-
-	<div id="loginDiv">
-		<h1 id="title">Welcome to TidalTies!</h1>
-		<form id="loginForm">
-			<h2 id="inner-title">Log in for a sea of connections.</h2>
-			<input type="text" id="loginName" placeholder="Username" required /><br />
-
-			<div class="password-container">
-				<input type="password" id="loginPassword" placeholder="Password" oninput="togglePasswordToggle()" required />
-				<span class="password-toggle" onclick="togglePasswordVisibility('loginPassword')">Show</span><br />
+	<main>
+		<div class="content">
+			<div class="text-container">
+				<h1 id="mainPageTitle">A sea of contacts right at your fingertips.</h1>
+				<h2 id="mainPageSubTitle">Don't let your connections wash away, keep them all stored in one place using
+					TidalTies.</h2>
 			</div>
+			<div class="image-container">
+				<img src="/images/penguinImage.png" alt="Static Image" class="image" id="staticImage">
+				<<img src="/images/scubaPenguin.gif" alt="Your GIF" class="gif" id="animatedGif">
+			</div>
+		</div>
+		<div class="button-container">
+			<button type="button" id="getStartedButton" class="buttons"
+				onclick="window.location.href = 'login.html';">Get Started</button>
+		</div>
+	</main>
 
-			<button type="submit" id="loginButton" class="buttons" onclick="doLogin();">Log In </button>
-			<span id="loginResult"></span>
-		</form>
-	</div>
-
-
-	<div id="signupDiv">
-		<span id="signupText">Don't have an account?</span>
-		<button type="button" id="signupButton" class="buttons" onclick="window.location.href = 'signup.html';">Register</button>
-	</div>
-
+	<footer>
+		<a href="https://github.com/viimalys/COP4331-contact-manager">Github</a>
+	</footer>
 </body>
 
 </html>

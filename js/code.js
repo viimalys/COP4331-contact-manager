@@ -401,3 +401,18 @@ function readContacts() {
 	xhr.send();
 }
 
+/*document.addEventListener('DOMContentLoaded', function () {
+    // Function to toggle between static image and animated GIF
+    function toggleImage() {
+        const staticImage = document.getElementById('staticImage');
+        const animatedGif = document.getElementById('animatedGif');
+
+        if (staticImage && animatedGif) {
+            staticImage.style.display = staticImage.style.display === 'none' ? 'block' : 'none';
+            animatedGif.style.display = animatedGif.style.display === 'none' ? 'block' : 'none';
+        }
+    }
+
+    // Call the toggleImage function every 5 seconds (adjust the interval as needed)
+    setInterval(toggleImage, 5000);
+});*/
