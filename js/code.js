@@ -31,7 +31,7 @@ function doLogin() {
 			if (this.readyState == 4 && this.status == 200) {
 				let jsonObject = JSON.parse(xhr.responseText);
 				userId = jsonObject.id;
-
+				console.log(typeof(jsonObject.id))
 				if (userId < 1) {
 					document.getElementById("loginResult").innerHTML = "User/Password combination incorrect";
 					return;
@@ -39,13 +39,15 @@ function doLogin() {
 
 				firstName = jsonObject.firstName;
 				lastName = jsonObject.lastName;
+				loginSessionID = jsonObject.id;
 
 				saveCookie();
-
+				
 				window.location.href = "landing.html";
 			}
 		};
 		xhr.send(jsonPayload);
+
 	}
 	catch (err) {
 		document.getElementById("loginResult").innerHTML = err.message;
@@ -263,10 +265,10 @@ function hideAddContactForm() {
 }
 
 function addContactInfo() {
-	var tmpFirstName = document.getElementById("firstNameInput").value;
-	var tmpLastName = document.getElementById("lastNameInput").value;
-	var tmpEmail = document.getElementById("emailInput").value;
-	var tmpPhone = document.getElementById("phoneInput").value;
+	let tmpFirstName = document.getElementById("firstNameInput").value;
+	let tmpLastName = document.getElementById("lastNameInput").value;
+	let tmpEmail = document.getElementById("emailInput").value;
+	let tmpPhone = document.getElementById("phoneInput").value;
 	addContact();
 	console.log(tmpFirstName, tmpLastName, tmpPhone, tmpEmail);
 	//tempAddRow(tmpFirstName, tmpLastName, tmpEmail, tmpPhone);
@@ -275,28 +277,29 @@ function addContactInfo() {
 }
 
 function addContactRow(tmpFirstName, tmpLastName, tmpPhone, tmpEmail) {
-	var table = document.getElementById("tableBody");
-	var rowCount = table.rows.length;
-	var row = table.insertRow(rowCount);
-	var cell1 = row.insertCell(0);
-	var cell2 = row.insertCell(1);
-	var cell3 = row.insertCell(2);
-	var cell4 = row.insertCell(3);
-	var cell5 = row.insertCell(4);
+	let table = document.getElementById("tableBody");
+	let rowCount = table.rows.length;
+	let row = table.insertRow(rowCount);
+	let cell1 = row.insertCell(0);
+	let cell2 = row.insertCell(1);
+	let cell3 = row.insertCell(2);
+	let cell4 = row.insertCell(3);
+	let cell5 = row.insertCell(4);
 	cell1.innerHTML = tmpFirstName;
 	cell2.innerHTML = tmpLastName;
 	cell3.innerHTML = tmpPhone;
 	cell4.innerHTML = tmpEmail;
-	//cell5.innerHTML =  "<td>" + "<button type='button' onclick='deleteContact("+ i +")' " + Delete + "</button>" + "</td>";
+	cell5.innerHTML =  "<td>" + "test" + "</td>";
 	hideAddContactForm();
 }
+
+//cell5.innerHTML =  "<td>" + "<button type='button' onclick='deleteContact("+ i +")' " + Delete + "</button>" + "</td>";
 
 function addContact(){
 	let firstName = document.getElementById("firstNameInput").value;
 	let lastName = document.getElementById("lastNameInput").value;
 	let phone = document.getElementById("phoneInput").value;
 	let email = document.getElementById("emailInput").value;
-	var table = document.getElementById("tableBody");
 
 	// Create a JavaScript object containing user data
 	let userData = {
