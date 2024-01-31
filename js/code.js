@@ -401,18 +401,18 @@ function readContacts() {
 	xhr.send();
 }
 
-/*document.addEventListener('DOMContentLoaded', function () {
-    // Function to toggle between static image and animated GIF
-    function toggleImage() {
-        const staticImage = document.getElementById('staticImage');
-        const animatedGif = document.getElementById('animatedGif');
+    // Function to play the GIF when double-clicked
+    function playGif() {
+        // Change the source of the image to the corresponding GIF
+        document.getElementById("staticImage").src = "/images/scubaPenguin.gif";
 
-        if (staticImage && animatedGif) {
-            staticImage.style.display = staticImage.style.display === 'none' ? 'block' : 'none';
-            animatedGif.style.display = animatedGif.style.display === 'none' ? 'block' : 'none';
-        }
+        // Disable further double-clicks to prevent restarting the GIF
+        document.getElementById("staticImage").ondblclick = null;
+
+        // Set a timeout to reset the image to the static one after the GIF duration
+        setTimeout(function() {
+            document.getElementById("staticImage").src = "/images/penguinImage.png";
+            // Re-enable double-click after the GIF finishes playing
+            document.getElementById("staticImage").ondblclick = playGif;
+        }, 6800); //  duration of GIF in milliseconds (6.8 seconds)
     }
-
-    // Call the toggleImage function every 5 seconds (adjust the interval as needed)
-    setInterval(toggleImage, 5000);
-});*/
