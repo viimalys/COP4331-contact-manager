@@ -102,8 +102,7 @@ body
 }
 
 
-.password-container, .firstName-container, 
-.lastName-container, .loginName-container {
+.password-container {
     position: relative;
 }
 
@@ -117,6 +116,26 @@ body
     /*color: #FFFFFF;*/
     display: none;
 }
+
+.shake {
+    animation: shake 0.6s;
+}
+
+@keyframes shake {
+    10%, 90% {
+        transform: translateX(-5px);
+    }
+    20%, 80% {
+        transform: translateX(5px);
+    }
+    30%, 50%, 70% {
+        transform: translateX(-5px);
+    }
+    40%, 60% {
+        transform: translateX(5px);
+    }
+}
+
 
 
 #signupText

@@ -106,36 +106,36 @@ function checkPasswordRequirements() {
 	passwordRequirements.innerHTML = ''; // Clear previous content
 
 	if (metRequirements) {
-		passwordRequirements.innerHTML = "<span style='color: red;'>&#10004;</span> All password requirements met!";
+		passwordRequirements.innerHTML = "<span style='color: green;'>&#10004;</span> All password requirements met!";
 	} else {
 		passwordRequirements.innerHTML = "Password Requirements:";
-		if (!lengthRequirement) {
+		if (lengthRequirement) {
 			passwordRequirements.innerHTML += "<br><span style='color: green;'>&#10004;</span> At least 12 characters long";
-		} else {
+		} else if (!lengthRequirement) {
 			passwordRequirements.innerHTML += "<br><span style='color: red;'>&#10008;</span> At least 12 characters long";
 		}
 
-		if (!uppercaseRequirement) {
+		if (uppercaseRequirement) {
 			passwordRequirements.innerHTML += "<br><span style='color: green;'>&#10004;</span> Contains uppercase letter(s)";
-		} else {
+		} else if (!uppercaseRequirement) {
 			passwordRequirements.innerHTML += "<br><span style='color: red;'>&#10008;</span> Contains uppercase letter(s)";
 		}
 
-		if (!lowercaseRequirement) {
+		if (lowercaseRequirement) {
 			passwordRequirements.innerHTML += "<br><span style='color: green;'>&#10004;</span> Contains lowercase letter(s)";
-		} else {
+		} else if (!lowercaseRequirement) {
 			passwordRequirements.innerHTML += "<br><span style='color: red;'>&#10008;</span> Contains lowercase letter(s)";
 		}
 
-		if (!numberRequirement) {
+		if (numberRequirement) {
 			passwordRequirements.innerHTML += "<br><span style='color: green;'>&#10004;</span> Contains number(s)";
-		} else {
+		} else if (!numberRequirement) {
 			passwordRequirements.innerHTML += "<br><span style='color: red;'>&#10008;</span> Contains number(s)";
 		}
 
-		if (!symbolRequirement) {
+		if (symbolRequirement) {
 			passwordRequirements.innerHTML += "<br><span style='color: green;'>&#10004;</span> Contains symbol(s)";
-		} else {
+		} else if (!symbolRequirement) {
 			passwordRequirements.innerHTML += "<br><span style='color: red;'>&#10008;</span> Contains symbol(s)";
 		}
 	}
@@ -200,43 +200,59 @@ function restorePlaceholderColor(inputId) {
 	}
 }
 
-function highlightFieldError(fieldId, errorMessage) {
-	const field = document.getElementById(fieldId);
-	const errorIcon = `<i class='bx bx-error-circle' style='color:#ff0000' onclick="displayErrorMessage('${errorMessage}')"></i>`;
-	field.classList.add('error');
-	field.insertAdjacentHTML('afterend', errorIcon);
+function highlightFieldError(fieldName, errorMessage) {
+	const inputElement = document.getElementById(fieldName);
+	const errorIcon = `<i class='bx bx-error-circle' style='color:#ff0000; font-size: 17px;'>${errorMessage}</i>`;
+
+	// Add shake animation class
+	inputElement.classList.add('shake');
+	setTimeout(() => {
+		// Remove shake animation class after the animation duration
+		inputElement.classList.remove('shake');
+	}, 300);
+
+	if (inputElement.value.trim() === '') {
+		if (!inputElement.classList.contains('error')) {
+			inputElement.classList.add('error');
+			inputElement.insertAdjacentHTML('beforebegin', errorIcon);
+
+		}
+	} else {
+		inputElement.classList.remove('error');
+		const errorIconElement = inputElement.previousElementSibling;
+		if (errorIconElement && errorIconElement.classList.contains('bx-error-circle')) {
+			errorIconElement.parentNode.removeChild(errorIconElement);
+		}
+	}
 }
+
 
 function removeFieldError(fieldId) {
 	const field = document.getElementById(fieldId);
 	field.classList.remove('error');
-	const errorIcon = field.nextElementSibling;
+	const errorIcon = field.previousElementSibling;
 	if (errorIcon && errorIcon.classList.contains('bx-error-circle')) {
 		errorIcon.remove();
 	}
 }
 
-function displayErrorMessage(message) {
-	alert(message); 
-}
-
 function confirmPasswordRequirements(password) {
-    const lengthRequirement = password.length >= 12;
-    const uppercaseRequirement = /[A-Z]/.test(password);
-    const lowercaseRequirement = /[a-z]/.test(password);
-    const numberRequirement = /\d/.test(password);
-    const symbolRequirement = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(password);
+	const lengthRequirement = password.length >= 12;
+	const uppercaseRequirement = /[A-Z]/.test(password);
+	const lowercaseRequirement = /[a-z]/.test(password);
+	const numberRequirement = /\d/.test(password);
+	const symbolRequirement = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(password);
 
-    const metRequirements = lengthRequirement && uppercaseRequirement && lowercaseRequirement && numberRequirement && symbolRequirement;
+	const metRequirements = lengthRequirement && uppercaseRequirement && lowercaseRequirement && numberRequirement && symbolRequirement;
 
-    return {
-        metRequirements,
-        lengthRequirement,
-        uppercaseRequirement,
-        lowercaseRequirement,
-        numberRequirement,
-        symbolRequirement
-    };
+	return {
+		metRequirements,
+		lengthRequirement,
+		uppercaseRequirement,
+		lowercaseRequirement,
+		numberRequirement,
+		symbolRequirement
+	};
 }
 
 function doRegister() {
@@ -258,24 +274,24 @@ function doRegister() {
 
 	// Check for empty fields
 	if (!firstNameValue || !lastNameValue || !loginValue || !passwordValue || !confirmPasswordRequirements(passwordValue).metRequirements) {
-		if(!firstNameValue){
+		if (!firstNameValue) {
 			highlightFieldError('firstName', 'First Name is required');
 		}
 
-		if(!lastNameValue){
+		if (!lastNameValue) {
 			highlightFieldError('lastName', 'Last Name is required');
 		}
 
-		if(!loginValue){
+		if (!loginValue) {
 			highlightFieldError('loginName', 'Username is required');
 		}
 
-		if(!passwordValue){
+		if (!passwordValue) {
 			highlightFieldError('loginPassword', 'Password is required');
-		}else if(!confirmPasswordRequirements(passwordValue).metRequirements){
+		} else if (!confirmPasswordRequirements(passwordValue).metRequirements) {
 			highlightFieldError('loginPassword', 'Password does not meet requirements');
 		}
-		
+
 		return;
 	}
 
