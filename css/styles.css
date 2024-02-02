@@ -10,6 +10,11 @@ COLOR PALETTE
 body 
 {
     margin: 0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     /*background-image: url(../images/background-image.jpg);
     background-position: center center;
     background-repeat: no-repeat;
@@ -29,6 +34,7 @@ body
 }
 
 #loginSignupDiv, #signupLoginDiv{
+    flex-grow: 1;
     margin: auto;
     margin-top: 15vh;
     margin-bottom: 5vh;
@@ -339,6 +345,7 @@ select{
 .right-links {
     display: flex;
     gap: 20px;
+    margin-left: auto;
 }
 
 .logo {
@@ -360,6 +367,17 @@ nav a {
 .logo a:hover,
 nav a:hover {
     font-size: 1.2em;  
+}
+
+
+.logo a.active,
+nav a.active {
+    border-bottom: 2px solid #FAF9F6;
+}
+
+.logo a:not(.active):active,
+nav a:not(.active):active {
+    font-size: 1em; 
 }
 
 .home{
@@ -390,14 +408,41 @@ main {
     margin-right: 20px;
 }
 
-.image-container {
+/*.image-container {
     position: relative;
-    /*max-width: 100%;
+    max-width: 100%;
     height: auto;
     position: absolute;
     top: 0;
-    left: 0;*/
+    left: 0;
+}*/
+.image-container {
+    position: relative;
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px; /* Add some space below the image */
 }
+
+.image,
+.gif {
+    max-width: 70%;
+    height: auto;
+}
+
+@media screen and (max-width: 768px) {
+    .image-container,
+    .image,
+    .gif {
+        display: none; /* Hide the image and its container on small screens */
+    }
+
+    .text-container {
+        max-width: 100%;
+        text-align: center;
+    }
+}
+
+
 
 /*.image,
 .gif {
@@ -438,6 +483,11 @@ footer {
     text-align: center;
     padding: 10px;
 }
+footer a i:hover {
+    font-size: 1.2em;
+    transition: all 0.3s ease; /* Add a smooth transition effect */
+}
+
 
 /*
 COLOR PALETTE
