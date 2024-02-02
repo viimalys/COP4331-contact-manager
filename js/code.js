@@ -15,6 +15,20 @@ function doLogin() {
 	let password = document.getElementById("loginPassword").value;
 	//	var hash = md5( password );
 
+
+	if (login.trim() === '' || password.trim() === '') {
+		// Check for empty username
+		if (login.trim() === '') {
+			highlightFieldError('loginName', 'Username cannot be empty');
+		}
+
+		// Check for empty password
+		if (password.trim() === '') {
+			highlightFieldError('loginPassword', 'Password cannot be empty');
+		}
+		return;
+	}
+
 	document.getElementById("loginResult").innerHTML = "";
 
 	let tmp = { login: login, password: password };

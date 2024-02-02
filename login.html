@@ -32,10 +32,10 @@
 			<!--<h1 id="title">Welcome to TidalTies!</h1>-->
 			<div id="loginForm">
 				<h2 id="inner-title">Login and sea the contatcs roll in!</h2>
-				<input type="text" id="loginName" placeholder="Username" required /><br />
+				<input type="text" id="loginName" placeholder="Username" oninput="removeFieldError('loginName')"required /><br />
 
 				<div class="password-container">
-					<input type="password" id="loginPassword" placeholder="Password" oninput="togglePasswordToggle()" required />
+					<input type="password" id="loginPassword" placeholder="Password" oninput="togglePasswordToggle(); removeFieldError('loginPassword')" required />
 					<span class="password-toggle" onclick="togglePasswordVisibility('loginPassword')"><i class='bx bx-show' style='color:#ffffff'  ></i></span> 
 				</div>
 
