@@ -8,6 +8,7 @@
 	<script type="text/javascript" src="js/code.js"></script>
 	<link href="css/styles.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
 <body>
@@ -30,14 +31,14 @@
 			<h1 id="title">Join the TidalTies Crew!</h1>
 			<div id="registerForm">
 				<h2 id="inner-title">Set sail by registering now.</h2>
-				<input type="text" id="firstName" placeholder="First Name" required /><br />
-				<input type="text" id="lastName" placeholder="Last Name" required /><br />
-				<input type="text" id="loginName" placeholder="Username" required /><br />
+				<input type="text" id="firstName" placeholder="First Name" required oninput="removeFieldError('firstName')" /><br />
+				<input type="text" id="lastName" placeholder="Last Name" required oninput="removeFieldError('lastName')"/><br />
+				<input type="text" id="loginName" placeholder="Username" required oninput="removeFieldError('loginName')"/><br />
 				<div class="password-container">
-					<input type="password" id="loginPassword" placeholder="Password" oninput="togglePasswordToggle()"
-						required />
-					<span class="password-toggle" onclick="togglePasswordVisibility('loginPassword')">Show</span><br />
+					<input type="password" id="loginPassword" placeholder="Password" oninput="togglePasswordToggle(); checkPasswordRequirements(); removeFieldError('loginPassword')" onfocus="showPasswordRequirements()" onblur="hidePasswordRequirements()" required />
+					<span class="password-toggle" onclick="togglePasswordVisibility('loginPassword')"><i class='bx bx-show' style='color:#ffffff'  ></i></span> 
 				</div>
+				<div id="passwordRequirements"></div>
 				<button type="submit" id="signupButton" class="buttons" onclick="doRegister()">Sign Up </button>
 				<span id="signupResult"></span>
 			</div>
@@ -51,3 +52,4 @@
 		</div>
 	</div>
 </body>
+</html>

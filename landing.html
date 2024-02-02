@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en-US" dir="ltr">
 
 <head>
@@ -9,13 +10,12 @@
 	<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 </head>
 
-<body>
-
+<body class="home" onload="readContacts()">
     <h1 id="title">TidalTies Contact List</h1>
     <div id="searchBar"><input type="text" placeholder="Search Contacts"></div>
     <div id="featureButtons">
-        <button type="button" id="addButton" class="buttons" onclick="showAddContactForm()">Add New Contact</button>
-        <form id="addContactForm">
+        <button type="button" id="addContactButton" class="buttons" onclick="showAddContactForm()">Add New Contact</button>
+        <div id="addContactForm">
             <p>
                 <label for="First Name"><b>First Name</b></label>
                 <input id="firstNameInput" placeholder="Enter First Name" name="firstNameInput" required>
@@ -25,32 +25,26 @@
                 <input id="lastNameInput" placeholder="Enter Last Name" name="lastNameInput" required>
             </p>
             <p>
-                <label for="email"><b>Email</b></label>
-                <input id="emailInput" placeholder="Enter Email Address" name="emailInput" required>
-            </p>
-            <p>
                 <label for="phone"><b>Phone</b></label>
                 <input id="phoneInput" placeholder="Enter Phone Number" name="phoneInput" required>
             </p>
-            <button type="button" class="buttons" onclick ="addContactInfo()">Add Contact</button>
-            <button type="button" class="buttons" onclick="hideAddContactForm()">Cancel</button>
-        </form>
+            <p>
+                <label for="email"><b>Email</b></label>
+                <input id="emailInput" placeholder="Enter Email Address" name="emailInput" required>
+            </p>
+            <button type="submit" class="buttons" onclick="addContact()">Add Contact</button>
+            <button type="reset" class="buttons" onclick="hideAddContactForm()">Cancel</button>
+        </div>
     </div>
-
     <div id="contactsDiv">
-        <table>
+        <table id="contactsTable">
             <tbody id="tableBody">
                 <tr>
                     <th>First</th>
                     <th>Last</th>
-                    <th>Email</th>
                     <th>Phone</th>
-                </tr>
-                <tr>
-                    <td>Vimalys</td><td>Rivera</td><td>vr@ucf.edu</td><td>vr123</td>
-                </tr>
-                <tr>
-                    <td>Tyler</td><td>Halfpenny</td><td>th@ucf.edu</td><td>th123</td>
+                    <th>Email</th>
+                    <th>Buttons</th>
                 </tr>
             </tbody>
         </table>

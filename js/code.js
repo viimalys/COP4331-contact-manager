@@ -62,10 +62,10 @@ function togglePasswordVisibility(passwordFieldId) {
 
 	if (passwordField.type === 'password') {
 		passwordField.type = 'text';
-		passwordToggle.textContent = 'Hide';
+		passwordToggle.innerHTML = "<i class='bx bx-hide'></i>"; // Set the HTML for the hide icon
 	} else {
 		passwordField.type = 'password';
-		passwordToggle.textContent = 'Show';
+		passwordToggle.innerHTML = "<i class='bx bx-show' style='color:#ffffff'></i>"; // Set the HTML for the show icon
 	}
 }
 
@@ -79,6 +79,68 @@ function togglePasswordToggle() {
 		passwordToggle.style.display = 'none';
 	}
 }
+
+function showPasswordRequirements() {
+	const passwordRequirements = document.getElementById('passwordRequirements');
+	passwordRequirements.style.display = 'block';
+}
+
+function hidePasswordRequirements() {
+	const passwordRequirements = document.getElementById('passwordRequirements');
+	passwordRequirements.style.display = 'none';
+}
+
+
+function checkPasswordRequirements() {
+	const passwordInput = document.getElementById('loginPassword');
+	const passwordRequirements = document.getElementById('passwordRequirements');
+
+	const lengthRequirement = passwordInput.value.length >= 12;
+	const uppercaseRequirement = /[A-Z]/.test(passwordInput.value);
+	const lowercaseRequirement = /[a-z]/.test(passwordInput.value);
+	const numberRequirement = /[0-9]/.test(passwordInput.value);
+	const symbolRequirement = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(passwordInput.value);
+
+	const metRequirements = lengthRequirement && uppercaseRequirement && lowercaseRequirement && numberRequirement && symbolRequirement;
+
+	passwordRequirements.innerHTML = ''; // Clear previous content
+
+	if (metRequirements) {
+		passwordRequirements.innerHTML = "<span style='color: red;'>&#10004;</span> All password requirements met!";
+	} else {
+		passwordRequirements.innerHTML = "Password Requirements:";
+		if (!lengthRequirement) {
+			passwordRequirements.innerHTML += "<br><span style='color: green;'>&#10004;</span> At least 12 characters long";
+		} else {
+			passwordRequirements.innerHTML += "<br><span style='color: red;'>&#10008;</span> At least 12 characters long";
+		}
+
+		if (!uppercaseRequirement) {
+			passwordRequirements.innerHTML += "<br><span style='color: green;'>&#10004;</span> Contains uppercase letter(s)";
+		} else {
+			passwordRequirements.innerHTML += "<br><span style='color: red;'>&#10008;</span> Contains uppercase letter(s)";
+		}
+
+		if (!lowercaseRequirement) {
+			passwordRequirements.innerHTML += "<br><span style='color: green;'>&#10004;</span> Contains lowercase letter(s)";
+		} else {
+			passwordRequirements.innerHTML += "<br><span style='color: red;'>&#10008;</span> Contains lowercase letter(s)";
+		}
+
+		if (!numberRequirement) {
+			passwordRequirements.innerHTML += "<br><span style='color: green;'>&#10004;</span> Contains number(s)";
+		} else {
+			passwordRequirements.innerHTML += "<br><span style='color: red;'>&#10008;</span> Contains number(s)";
+		}
+
+		if (!symbolRequirement) {
+			passwordRequirements.innerHTML += "<br><span style='color: green;'>&#10004;</span> Contains symbol(s)";
+		} else {
+			passwordRequirements.innerHTML += "<br><span style='color: red;'>&#10008;</span> Contains symbol(s)";
+		}
+	}
+}
+
 
 const loginNameElement = document.getElementById('loginName');
 const loginPasswordElement = document.getElementById('loginPassword');
@@ -138,6 +200,45 @@ function restorePlaceholderColor(inputId) {
 	}
 }
 
+function highlightFieldError(fieldId, errorMessage) {
+	const field = document.getElementById(fieldId);
+	const errorIcon = `<i class='bx bx-error-circle' style='color:#ff0000' onclick="displayErrorMessage('${errorMessage}')"></i>`;
+	field.classList.add('error');
+	field.insertAdjacentHTML('afterend', errorIcon);
+}
+
+function removeFieldError(fieldId) {
+	const field = document.getElementById(fieldId);
+	field.classList.remove('error');
+	const errorIcon = field.nextElementSibling;
+	if (errorIcon && errorIcon.classList.contains('bx-error-circle')) {
+		errorIcon.remove();
+	}
+}
+
+function displayErrorMessage(message) {
+	alert(message); 
+}
+
+function confirmPasswordRequirements(password) {
+    const lengthRequirement = password.length >= 12;
+    const uppercaseRequirement = /[A-Z]/.test(password);
+    const lowercaseRequirement = /[a-z]/.test(password);
+    const numberRequirement = /\d/.test(password);
+    const symbolRequirement = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(password);
+
+    const metRequirements = lengthRequirement && uppercaseRequirement && lowercaseRequirement && numberRequirement && symbolRequirement;
+
+    return {
+        metRequirements,
+        lengthRequirement,
+        uppercaseRequirement,
+        lowercaseRequirement,
+        numberRequirement,
+        symbolRequirement
+    };
+}
+
 function doRegister() {
 	// Initialize variables for user information
 	userId = 0;
@@ -150,8 +251,35 @@ function doRegister() {
 	let loginValue = document.getElementById("loginName").value;
 	let passwordValue = document.getElementById("loginPassword").value;
 
+
 	// Clear any previous registration result message
 	document.getElementById("signupResult").innerHTML = "";
+
+
+	// Check for empty fields
+	if (!firstNameValue || !lastNameValue || !loginValue || !passwordValue || !confirmPasswordRequirements(passwordValue).metRequirements) {
+		if(!firstNameValue){
+			highlightFieldError('firstName', 'First Name is required');
+		}
+
+		if(!lastNameValue){
+			highlightFieldError('lastName', 'Last Name is required');
+		}
+
+		if(!loginValue){
+			highlightFieldError('loginName', 'Username is required');
+		}
+
+		if(!passwordValue){
+			highlightFieldError('loginPassword', 'Password is required');
+		}
+		
+		if(!confirmPasswordRequirements(passwordValue).metRequirements){
+			highlightFieldError('loginPassword', 'Password does not meet requirements');
+		}
+		
+		return;
+	}
 
 	// Create a JavaScript object containing user data
 	let userData = {
@@ -401,18 +529,18 @@ function readContacts() {
 	xhr.send();
 }
 
-    // Function to play the GIF when double-clicked
-    function playGif() {
-        // Change the source of the image to the corresponding GIF
-        document.getElementById("staticImage").src = "/images/scubaPenguin.gif";
+// Function to play the GIF when double-clicked
+function playGif() {
+	// Change the source of the image to the corresponding GIF
+	document.getElementById("staticImage").src = "/images/scubaPenguin.gif";
 
-        // Disable further double-clicks to prevent restarting the GIF
-        document.getElementById("staticImage").ondblclick = null;
+	// Disable further double-clicks to prevent restarting the GIF
+	document.getElementById("staticImage").ondblclick = null;
 
-        // Set a timeout to reset the image to the static one after the GIF duration
-        setTimeout(function() {
-            document.getElementById("staticImage").src = "/images/penguinImage.png";
-            // Re-enable double-click after the GIF finishes playing
-            document.getElementById("staticImage").ondblclick = playGif;
-        }, 6800); //  duration of GIF in milliseconds (6.8 seconds)
-    }
+	// Set a timeout to reset the image to the static one after the GIF duration
+	setTimeout(function () {
+		document.getElementById("staticImage").src = "/images/penguinImage.png";
+		// Re-enable double-click after the GIF finishes playing
+		document.getElementById("staticImage").ondblclick = playGif;
+	}, 6800); //  duration of GIF in milliseconds (6.8 seconds)
+}
