@@ -567,8 +567,8 @@ function playGif() {
 
 	// Set a timeout to reset the image to the static one after the GIF duration
 	setTimeout(function () {
-		document.getElementById("staticImage").src = "/images/penguinImage.png";
+		document.getElementById("staticImage").src = "/images/penguinImage.jpg";
 		// Re-enable double-click after the GIF finishes playing
 		document.getElementById("staticImage").ondblclick = playGif;
-	}, 6800); //  duration of GIF in milliseconds (6.8 seconds)
+	}, 3500); //  duration of GIF in milliseconds (6.8 seconds)
 }
