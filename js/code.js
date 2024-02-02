@@ -272,9 +272,7 @@ function doRegister() {
 
 		if(!passwordValue){
 			highlightFieldError('loginPassword', 'Password is required');
-		}
-		
-		if(!confirmPasswordRequirements(passwordValue).metRequirements){
+		}else if(!confirmPasswordRequirements(passwordValue).metRequirements){
 			highlightFieldError('loginPassword', 'Password does not meet requirements');
 		}
 		

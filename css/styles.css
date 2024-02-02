@@ -107,7 +107,7 @@ body
     position: relative;
 }
 
-.password-toggle, .badField {
+.password-toggle {
     cursor: pointer;
     position: absolute;
     right: 3%;
