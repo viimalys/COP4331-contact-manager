@@ -56,7 +56,7 @@ function doLogin() {
 				loginSessionID = jsonObject.id;
 				saveCookie();
 				// Debugging: Log userId to the console
-				console.log("User ID:", userId);
+				//console.log("User ID:", userId);
 
 				window.location.href = "landing.html";
 			}
@@ -68,6 +68,26 @@ function doLogin() {
 		document.getElementById("loginResult").innerHTML = err.message;
 	}
 
+}
+
+// Function to get user initials
+function getUserInitials() {
+    readCookie();
+	console.log("first name:", firstName);
+	console.log("last name:", lastName);
+    const initials = (firstName.charAt(0) + lastName.charAt(0)).toUpperCase();
+	console.log("intials", initials);
+    return initials;
+}
+
+// Function to update the user initials in the HTML
+function updateUserInitials() {
+    const userInitialsDiv = document.getElementById("userInitials");
+
+    if (userInitialsDiv) {
+        const initials = getUserInitials();
+        userInitialsDiv.textContent = initials;
+    }
 }
 
 function togglePasswordVisibility(passwordFieldId) {

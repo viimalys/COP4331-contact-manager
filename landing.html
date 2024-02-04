@@ -2,52 +2,81 @@
 <html lang="en-US" dir="ltr">
 
 <head>
-	<meta charset="utf-8">
-	<title>TidalTies Landing Page</title>
-	<script type="text/javascript" src="js/md5.js"></script>
-	<script type="text/javascript" src="js/code.js"></script>
-	<link href="css/styles.css" rel="stylesheet">
-	<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <meta charset="utf-8">
+    <title>TidalTies Landing Page</title>
+    <script type="text/javascript" src="js/md5.js"></script>
+    <script type="text/javascript" src="js/code.js"></script>
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
-<body class="home" onload="readContacts()">
-    <h1 id="title">TidalTies Contact List</h1>
-    <div id="searchBar"><input type="text" placeholder="Search Contacts"></div>
-    <div id="featureButtons">
-        <button type="button" id="addContactButton" class="buttons" onclick="showAddContactForm()">Add New Contact</button>
+<body class="landing" onload="readContacts(); updateUserInitials();">
+    <header>
+        <div class="banner">
+            <nav>
+                <div class="logo">
+                    <a href="#" class="active">TidalTies</a>
+                </div>
+
+                <div class="right-links">
+                    <a href="#">About Us</a>
+                    <div class="user-dropdown">
+                        <!-- Display user initials inside a circle -->
+                        <div class="circle" id="userInitials">AB</div>
+
+                        <!-- Dropdown content -->
+                        <div class="dropdown-content" id="userDropdown">
+                            <a href="#">Profile</a>
+                            <a href="#">Settings</a>
+                            <a href="#" onclick="doLogout()">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="landing-content">
+        <div class="search-container">
+            <input type="text" id="search" placeholder="Search Contacts">
+            <span class="search-icon"><i class='bx bx-search-alt-2' style='color:#333333'></i></span>
+        </div>
+        <div id="featureButtons">
+            <button type="button" id="addContactButton" class="buttons" onclick="showAddContactForm()">Add New
+                Contact</button>
+        </div>
         <div id="addContactForm">
-            <p>
-                <label for="First Name"><b>First Name</b></label>
+            <div id="First Name"><b>First Name</b>
                 <input id="firstNameInput" placeholder="Enter First Name" name="firstNameInput" required>
-            </p>
-            <p>
-                <label for="Last Name"><b>Last Name</b></label>
+            </div>
+
+            <div id="Last Name"><b>Last Name</b>
                 <input id="lastNameInput" placeholder="Enter Last Name" name="lastNameInput" required>
-            </p>
-            <p>
-                <label for="phone"><b>Phone</b></label>
+            </div>
+
+            <div id="phone"><b>Phone</b>
                 <input id="phoneInput" placeholder="Enter Phone Number" name="phoneInput" required>
-            </p>
-            <p>
-                <label for="email"><b>Email</b></label>
+            </div>
+            <div id="email"><b>Email</b>
                 <input id="emailInput" placeholder="Enter Email Address" name="emailInput" required>
-            </p>
+            </div>
             <button type="submit" class="buttons" onclick="addContact()">Add Contact</button>
             <button type="reset" class="buttons" onclick="hideAddContactForm()">Cancel</button>
         </div>
-    </div>
-    <div id="contactsDiv">
-        <table id="contactsTable">
-            <tbody id="tableBody">
-                <tr>
-                    <th>First</th>
-                    <th>Last</th>
-                    <th>Phone</th>
-                    <th>Email</th>
-                    <th>Buttons</th>
-                </tr>
-            </tbody>
-        </table>
+        <div id="contactsDiv">
+            <table id="contactsTable">
+                <tbody id="tableBody">
+                    <tr>
+                        <th>First</th>
+                        <th>Last</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                        <th>Buttons</th>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
 

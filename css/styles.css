@@ -33,6 +33,7 @@ body
     color: #FFFFFF; /*Should probably change color bc too light*/
 }
 
+
 #loginSignupDiv, #signupLoginDiv{
     flex-grow: 1;
     margin: auto;
@@ -41,11 +42,13 @@ body
     max-width: 50%;
     text-align: center;
     font-size: 30px;
-    /*position: absolute;
-    top: 100px; 
-    left: 50%;
-    transform: translateX(-50%);
-    align-items: center;*/
+
+}
+
+.landing-content{
+    margin: auto;
+    margin-top: 25vh;
+
 }
 
 
@@ -68,7 +71,7 @@ body
     font-size: 30px;
     text-align: left;
     padding-left: 5%;
-    padding-right: 13%;
+    padding-right: 15%;
     background: transparent;
     border: none;
     outline: none;
@@ -76,6 +79,21 @@ body
     box-shadow: 0 0 10px rgba(0, 0, 0, .3);
     border-radius: 40px;
     color: #FFFFFF;
+}
+
+#search{
+    margin: 1vh auto;
+    max-width: 100%;
+    font-size: 30px;
+    text-align: left;
+    padding-left: 5%;
+    padding-right: 15%;
+    background: white;
+    border: none;
+    outline: none;
+    border: 2px solid rgba(255, 255, 255, .2);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .3);
+    border-radius: 40px;
 }
 
 #passwordRequirements {
@@ -107,6 +125,24 @@ body
     color: rgba(255, 255, 255, 0.7);
 }
 
+.search-container{
+    position: relative;
+    align-items: center;
+}
+
+.search-icon{
+    position: relative;
+    cursor: pointer;
+    position: absolute;
+    right: 3%;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 30px;
+}
+
+#search ::placeholder{
+    color: #333;
+}
 
 .password-container {
     position: relative;
@@ -335,8 +371,6 @@ select{
     left: 0;
     width: 100%;
     background-color: #0B2545;
-    display: flex;
-    justify-content: space-between;
     align-items: center;
     padding: 20px;
     z-index: 1000;
@@ -344,13 +378,66 @@ select{
 
 .right-links {
     display: flex;
+    align-items: center;
     gap: 20px;
-    margin-left: auto;
+    margin-right: 5%;
 }
 
-.logo {
-    font-size: 24px; 
+.logo{
+    margin-right: auto;
+    font-size: 24px;
 }
+
+.user-initials{
+    margin: 0 10px;
+}
+
+.circle {
+    /*width: 40px;
+    height: 40px;*/
+    border-radius: 50%;
+    background-color: #FAF9F6;
+    color: #0B2545; 
+    padding: 8px;
+    cursor: pointer;
+    /*display: flex;
+    justify-content: center;
+    align-items: center; */
+    font-weight: bold;
+}
+
+.user-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #FAF9F6;
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: #0B2545;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #13315C;
+    color: #FFFFFF;
+}
+
+.user-dropdown:hover .dropdown-content {
+    display: block;
+}
+
 
 nav {
     display: flex;
@@ -373,6 +460,7 @@ nav a:hover {
 .logo a.active,
 nav a.active {
     border-bottom: 2px solid #FAF9F6;
+    font-size: inherit; 
 }
 
 .logo a:not(.active):active,
@@ -392,12 +480,11 @@ main {
     align-items: center;
     min-height: calc(95vh - 70px); 
     padding-top: 70px;
-    margin-left: 5%;  
+    /*margin-left: 5%;  */
 }
 
 .content {
     display: flex;
-    /*flex-direction: column;*/
     align-items: center;
     max-width: 90%;
     text-align: left;
@@ -406,6 +493,7 @@ main {
 .text-container {
     max-width: 40%;
     margin-right: 20px;
+    margin-left: 5%;
 }
 
 /*.image-container {
@@ -482,6 +570,7 @@ footer {
     color: white;
     text-align: center;
     padding: 10px;
+    font-size: 25px;
 }
 footer a i:hover {
     font-size: 1.2em;
