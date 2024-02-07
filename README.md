@@ -68,3 +68,18 @@ JSON Input:
     "login":"RickL",
     "password" : "COPISCOOL"
 }
+
+
+## UpdateContact.php
+Updates the contact information for the contact
+
+JSON Input:
+{
+    "contactId": "1",
+    "newData": {
+        "firstName": "First",
+        "lastName": "Last",
+        "phone": "1234567891",
+        "email": "email@mail.com"
+    }
+}
