@@ -83,3 +83,15 @@ JSON Input:
         "email": "email@mail.com"
     }
 }
+
+
+## UpdateUser.php
+Updates the User information for an existing User
+
+JSON Input:
+{
+    "UserId": "1",
+    "newFirstName": "New",
+    "newLastName": "New",
+    "newUserName": "New"
+}
