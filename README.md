@@ -28,7 +28,7 @@ Returns the contact information of a specific User.
 JSON Input:
 {
     "UserId": "1"
-{
+}
 
 
 ## CreateContact.php
