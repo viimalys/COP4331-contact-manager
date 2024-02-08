@@ -1,7 +1,6 @@
 const urlBase = 'http://poos-team-20.xyz/LAMPAPI';
 const extension = 'php';
 
-let loginSessionID = 0;
 let userId = 0;
 let firstName = "";
 let lastName = "";
@@ -14,7 +13,6 @@ function doLogin() {
 	let login = document.getElementById("loginName").value;
 	let password = document.getElementById("loginPassword").value;
 	//	var hash = md5( password );
-
 
 	if (login.trim() === '' || password.trim() === '') {
 		// Check for empty username
@@ -53,7 +51,6 @@ function doLogin() {
 
 				firstName = jsonObject.firstName;
 				lastName = jsonObject.lastName;
-				loginSessionID = jsonObject.id;
 				saveCookie();
 				// Debugging: Log userId to the console
 				//console.log("User ID:", userId);
@@ -62,7 +59,6 @@ function doLogin() {
 			}
 		};
 		xhr.send(jsonPayload);
-
 	}
 	catch (err) {
 		document.getElementById("loginResult").innerHTML = err.message;
@@ -124,7 +120,6 @@ function hidePasswordRequirements() {
 	passwordRequirements.style.display = 'none';
 }
 
-
 function checkPasswordRequirements() {
 	const passwordInput = document.getElementById('loginPassword');
 	const passwordRequirements = document.getElementById('passwordRequirements');
@@ -174,7 +169,6 @@ function checkPasswordRequirements() {
 		}
 	}
 }
-
 
 const loginNameElement = document.getElementById('loginName');
 const loginPasswordElement = document.getElementById('loginPassword');
@@ -259,7 +253,6 @@ function highlightFieldError(fieldName, errorMessage) {
 		}
 	}
 }
-
 
 function removeFieldError(fieldId) {
 	const field = document.getElementById(fieldId);
@@ -441,32 +434,18 @@ function hideAddContactForm() {
 	document.getElementById("addContactForm").style.display = "none";
 }
 
-function addContactInfo() {
-	var tmpFirstName = document.getElementById("firstNameInput").value;
-	var tmpLastName = document.getElementById("lastNameInput").value;
-	var tmpEmail = document.getElementById("emailInput").value;
-	var tmpPhone = document.getElementById("phoneInput").value;
-	addContact();
-	console.log(tmpFirstName, tmpLastName, tmpPhone, tmpEmail);
-	//tempAddRow(tmpFirstName, tmpLastName, tmpEmail, tmpPhone);
-	hideAddContactForm();
-	readContacts();
-}
-
-function addContactRow(tmpFirstName, tmpLastName, tmpPhone, tmpEmail) {
-	var table = document.getElementById("tableBody");
-	var rowCount = table.rows.length;
-	var row = table.insertRow(rowCount);
-	var cell1 = row.insertCell(0);
-	var cell2 = row.insertCell(1);
-	var cell3 = row.insertCell(2);
-	var cell4 = row.insertCell(3);
-	var cell5 = row.insertCell(4);
-	cell1.innerHTML = tmpFirstName;
-	cell2.innerHTML = tmpLastName;
-	cell3.innerHTML = tmpPhone;
-	cell4.innerHTML = tmpEmail;
-	//cell5.innerHTML =  "<td>" + "<button type='button' onclick='deleteContact("+ i +")' " + Delete + "</button>" + "</td>";
+function addContactRow(firstName, lastName, Phone, Email, contactID) {
+	let tableBody = document.getElementById("tableBody");
+	let text = tableBody.innerHTML;
+	text += "<tr id='row" + contactID + "'>";
+	text += "<td id='first_Name" + contactID + "'><span>" + firstName + "</span></td>";
+	text += "<td id='last_Name" + contactID + "'><span>" + lastName + "</span></td>";
+	text += "<td id='phone" + contactID + "'><span>" + Phone + "</span></td>";
+	text += "<td id='email" + contactID + "'><span>" + Email + "</span></td>";
+	text += "<td>" + "<button type='button' class='delBtn' onclick='deleteContact(" + contactID + ")'>" +  "Delete Contact " + contactID + "</button>" 
+		+ "<button type='button' class='editBtn' onclick='updateContact(" + contactID + ")'>" +  "Edit Contact " + contactID + "</button>" + "</td>";
+	text += "</tr>"
+	tableBody.innerHTML = text;
 	hideAddContactForm();
 }
 
@@ -476,7 +455,6 @@ function addContact() {
 	let lastName = document.getElementById("lastNameInput").value;
 	let phone = document.getElementById("phoneInput").value;
 	let email = document.getElementById("emailInput").value;
-	var table = document.getElementById("tableBody");
 
 	// Create a JavaScript object containing user data
 	let userData = {
@@ -487,10 +465,11 @@ function addContact() {
 		userId: userId
 	};
 
-	//console.log(userData);
+	console.log(userData);
+
 	// Convert the user data object to a JSON string
 	let jsonPayload = JSON.stringify(userData);
-	let url = urlBase + '/Create.' + extension;
+	let url = urlBase + '/CreateContact.' + extension;
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST", url, true);
 	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8")
@@ -505,37 +484,47 @@ function addContact() {
 			}
 		};
 		xhr.send(jsonPayload);
-		addContactRow(firstName, lastName, phone, email);
+		let jsonData = JSON.parse(xhr.responseText);
+		let contactID = jsonData.ID;
+		addContactRow(firstName, lastName, phone, email, contactID);
 	}
 	catch (err) {
 		// error message
 	}
 }
 
-function deleteContact(row) {
-	let userData = {
-		firstName: firstName,
-		lastName: lastName,
-	};
-	let jsonPayload = JSON.stringify(userData);
-	let url = urlBase + '/Delete.' + extension;
-	let xhr = new XMLHttpRequest();
-	xhr.open("POST", url, true);
-	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8")
-	try {
-		xhr.onreadystatechange = function () {
-			if (xhr.readyState == 4) {
-				if (xhr.status == 200) {
-					// something
-				} else {
-					// error handling
-				}
-			}
+function deleteContact(id) {
+	let firstName = document.getElementById("first_Name" + id).innerText;
+	let lastName = document.getElementById("last_Name" + id).innerText;
+	if(confirm("Are you sure you want to delete contact " + firstName + " " + lastName + "?") == true)
+	{
+		let userData = {
+			firstName: firstName,
+			lastName: lastName
 		};
-		xhr.send(jsonPayload);
-	}
-	catch (err) {
-		// error message
+		let jsonPayload = JSON.stringify(userData);
+		let url = urlBase + '/DeleteContact.' + extension;
+		let xhr = new XMLHttpRequest();
+		xhr.open("POST", url, true);
+		xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+		try {
+			xhr.onreadystatechange = function () {
+				if (xhr.readyState == 4) {
+					if (xhr.status == 200) {
+						// something
+					} else {
+						// error handling
+					}
+				}
+			};
+			xhr.send(jsonPayload);
+		}
+		catch (err) {
+			// error message
+		}
+		//let table = document.getElementById("tableBody");
+		//table.deleteRow(row);
+		refreshContacts();
 	}
 }
 
@@ -543,30 +532,27 @@ function readContacts() {
 	readCookie();
 	// Debugging: Log userId to the console
 	console.log("User ID:", userId);
-	//alert("Page Loaded! Getting Contacts!");
 	let url = urlBase + '/Read.' + extension;
 	let xhr = new XMLHttpRequest();
 	xhr.open("GET", url, true);
-	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8")
+	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
 	xhr.onreadystatechange = function () {
 		if (xhr.readyState == 4) {
 			if (xhr.status == 200) {
 				// The request has been completed successfully
 				//console.log(xhr.responseText);
-				//alert("ready!");
 				let jsonData = JSON.parse(xhr.responseText);
-				//console.log(jsonData);
+				console.log(jsonData);
 				//console.log(jsonData.length);
-				console.log("Login Session ID: " + loginSessionID)
 				for (i = 0; i < jsonData.length; i++) {
-					console.log(jsonData[i]);
-					console.log(typeof (jsonData[i].UserID));
+					//console.log(jsonData[i]);
+					//console.log(typeof (jsonData[i].UserID));
 					let jsonUserIDstr = jsonData[i].UserID;
 					let jsonUserIDint = parseInt(jsonUserIDstr, 10);
-					console.log(jsonUserIDint);
-					console.log(typeof (jsonUserIDint));
+					//console.log(jsonUserIDint);
+					//console.log(typeof (jsonUserIDint));
 					if (userId == jsonUserIDint) {
-						addContactRow(jsonData[i].FirstName, jsonData[i].LastName, jsonData[i].Phone, jsonData[i].Email);
+						addContactRow(jsonData[i].FirstName, jsonData[i].LastName, jsonData[i].Phone, jsonData[i].Email, jsonData[i].ID);
 					}
 				}
 			} else {
@@ -575,6 +561,115 @@ function readContacts() {
 		}
 	};
 	xhr.send();
+}
+
+function updateContact (id) {
+	let tmpRow = document.getElementById("row" + id);
+	let tmpFirst = document.getElementById("first_Name" + id).innerText;
+	let tmpLast = document.getElementById("last_Name" + id).innerText;
+	let tmpPhone = document.getElementById("phone" + id).innerText;
+	let tmpEmail = document.getElementById("email" + id).innerText;
+	console.log(tmpFirst);
+	tmpRow.innerHTML = "";
+	let text = "";
+	text += "<td><input id='newFirstName" + id + "' value='" + tmpFirst + "'></input></td>";
+	text += "<td><input id='newLastName" + id + "' value='" + tmpLast + "'></input></td>";
+	text += "<td><input id='newPhone" + id + "' value='" + tmpPhone + "'></input></td>";
+	text += "<td><input id='newEmail" + id + "' value='" + tmpEmail + "'></input></td>";
+	text += "<td>" + "<button type='button' class='delBtn' onclick='deleteContact(" + id + ")'>" +  "Delete Contact " + id + "</button>" 
+		+ "<button type='button' class='saveBtn' onclick='saveContact(" + id + ")'>" +  "Save Contact " + id + "</button>" + "</td>";
+	tmpRow.innerHTML = text;
+}
+
+function saveContact (id) {
+	console.log("Saved: " + id );
+	let savedRow = document.getElementById("row" + id);
+	let savedFirst = document.getElementById("newFirstName" + id).value;
+	let savedLast = document.getElementById("newLastName" + id).value;
+	let savedPhone = document.getElementById("newPhone" + id).value;
+	let savedEmail = document.getElementById("newEmail" + id).value;
+	savedRow.innerHTML = "";
+	let text = "";
+	text += "<td id='first_Name" + id + "'><span>" + savedFirst + "</span></td>";
+	text += "<td id='last_Name" + id + "'><span>" + savedLast + "</span></td>";
+	text += "<td id='phone" + id + "'><span>" + savedPhone + "</span></td>";
+	text += "<td id='email" + id + "'><span>" + savedEmail + "</span></td>";
+	text += "<td>" + "<button type='button' class='delBtn' onclick='deleteContact(" + id + ")'>" +  "Delete Contact " + id + "</button>" 
+		+ "<button type='button' class='editBtn' onclick='updateContact(" + id + ")'>" +  "Edit Contact " + id + "</button>" + "</td>";
+	savedRow.innerHTML = text;
+
+	let userData = {
+		contactId: id,
+		newData: {
+			firstName: savedFirst,
+			lastName: savedLast,
+			phone: savedPhone,
+			email: savedEmail
+		}
+	};
+
+	console.log(userData);
+	let jsonPayload = JSON.stringify(userData);
+	let url = urlBase + '/UpdateContact.' + extension;
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+	try {
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState == 4) {
+				if (xhr.status == 200) {
+					// something
+				} else {
+					// error handling
+				}
+			}
+		};
+		xhr.send(jsonPayload);
+	}
+	catch (err) {
+		// error message
+	}
+}
+
+function searchContacts () {
+	tableBody = document.getElementById("tableBody");
+	tableBody.innerHTML =  "";
+	let searchTerm = document.getElementById("searchBar").value;
+	let userData = {
+		search: searchTerm,
+	};
+	console.log(searchTerm);
+	let jsonPayload = JSON.stringify(userData);
+	let url = urlBase + '/Search.' + extension;
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+	xhr.onreadystatechange = function () {
+		if (xhr.readyState == 4) {
+			if (xhr.status == 200) {
+				console.log("Searching")
+				console.log("UID: " + userId);
+				let jsonData = JSON.parse(xhr.responseText);
+				console.log(jsonData.results);
+				console.log(xhr.responseText);
+				for (i = 0; i < jsonData.results.length; i++) {
+					console.log("loop entered");
+					let jsonUserIDstr = jsonData.results[i].UserID;
+					let jsonUserIDint = parseInt(jsonUserIDstr, 10);
+					if (userId == jsonUserIDint) {
+						addContactRow(jsonData.results[i].FirstName, jsonData.results[i].LastName, jsonData.results[i].Phone, jsonData.results[i].Email, jsonData.results[i].UserID);
+					}
+				}
+			}
+		}
+	}
+	xhr.send(jsonPayload);
+}
+
+function refreshContacts() {
+	tableBody = document.getElementById("tableBody");
+	tableBody.innerHTML = "";
+	readContacts();
 }
 
 // Function to play the GIF when double-clicked
