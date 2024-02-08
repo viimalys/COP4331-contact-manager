@@ -23,7 +23,12 @@ JSON Input:
 
 
 ## Read.php
-Reads all of the information from the Contacts database. No JSON Input needed.
+Returns the contact information of a specific User.
+
+JSON Input:
+{
+    "UserId": "1"
+{
 
 
 ## CreateContact.php
