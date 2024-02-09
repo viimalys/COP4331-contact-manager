@@ -33,7 +33,7 @@ body
     background-color: #FAF9F6;
 }
 
-#loginPage, #signupPage, .landing{
+#loginPage, #signupPage, .landing, .about{
     background-color: #97d0ff;
 }
 
@@ -169,7 +169,7 @@ body
     top: 50%;
     transform: translateY(-50%);
     font-size: 14px;
-    /*color: #FFFFFF;*/
+    color: #FFFFFF;
     display: none;
 }
 
@@ -510,25 +510,17 @@ main {
     margin-left: 5%;
 }
 
-/*.image-container {
-    position: relative;
-    max-width: 100%;
-    height: auto;
-    position: absolute;
-    top: 0;
-    left: 0;
-}*/
+
 .image-container {
     position: relative;
-    max-width: 100%;
+    /*max-width: 85%;*/
     height: auto;
-    margin-bottom: 20px; /* Add some space below the image */
+    /*margin-bottom: 20px;  Add some space below the image */
 }
 
-.image,
-.gif {
-    max-width: 70%;
-    height: auto;
+.image{
+    max-width: 85%;
+    font-size: large;
 }
 
 @media screen and (max-width: 768px) {
@@ -542,21 +534,6 @@ main {
         max-width: 100%;
         text-align: center;
     }
-}
-
-
-
-/*.image,
-.gif {
-    max-width: 100%;
-    height: auto;
-    position: absolute;
-    top: 0;
-    left: 0;
-}*/
-
-.gif {
-    display: none; /* Initially hide the animated GIF */
 }
 
 .button-container {

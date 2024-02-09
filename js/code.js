@@ -92,7 +92,7 @@ function togglePasswordVisibility(passwordFieldId) {
 
 	if (passwordField.type === 'password') {
 		passwordField.type = 'text';
-		passwordToggle.innerHTML = "<i class='bx bx-hide'></i>"; // Set the HTML for the hide icon
+		passwordToggle.innerHTML = "<i class='bx bx-hide' style='color:#ffffff'></i>"; // Set the HTML for the hide icon
 	} else {
 		passwordField.type = 'password';
 		passwordToggle.innerHTML = "<i class='bx bx-show' style='color:#ffffff'></i>"; // Set the HTML for the show icon
@@ -367,8 +367,8 @@ function doRegister() {
 						// Save user information in a cookie (not shown in the provided code)
 						saveCookie();
 
-						// Redirect the user to the "index.html" page
-						window.location.href = "index.html";
+						// Redirect the user to the "login.html" page
+						window.location.href = "login.html";
 					}
 				} else {
 					// Handle errors during registration
@@ -489,7 +489,7 @@ function addContact() {
 		addContactRow(firstName, lastName, phone, email, contactID);
 	}
 	catch (err) {
-		// error message
+		console.log(err);
 	}
 }
 
@@ -532,35 +532,36 @@ function readContacts() {
 	readCookie();
 	// Debugging: Log userId to the console
 	console.log("User ID:", userId);
+	let userData = {
+		UserId: userId
+	};
+	let jsonPayload = JSON.stringify(userData);
 	let url = urlBase + '/Read.' + extension;
 	let xhr = new XMLHttpRequest();
-	xhr.open("GET", url, true);
+	xhr.open("POST", url, true);
 	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-	xhr.onreadystatechange = function () {
-		if (xhr.readyState == 4) {
-			if (xhr.status == 200) {
-				// The request has been completed successfully
-				//console.log(xhr.responseText);
-				let jsonData = JSON.parse(xhr.responseText);
-				console.log(jsonData);
-				//console.log(jsonData.length);
-				for (i = 0; i < jsonData.length; i++) {
-					//console.log(jsonData[i]);
-					//console.log(typeof (jsonData[i].UserID));
-					let jsonUserIDstr = jsonData[i].UserID;
-					let jsonUserIDint = parseInt(jsonUserIDstr, 10);
-					//console.log(jsonUserIDint);
-					//console.log(typeof (jsonUserIDint));
-					if (userId == jsonUserIDint) {
+	try{
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState == 4) {
+				if (xhr.status == 200) {
+					// The request has been completed successfully
+					console.log("test");
+					console.log(xhr.responseText);
+					let jsonData = JSON.parse(xhr.responseText);
+					console.log(jsonData);
+					for (i = 0; i < jsonData.length; i++) {
 						addContactRow(jsonData[i].FirstName, jsonData[i].LastName, jsonData[i].Phone, jsonData[i].Email, jsonData[i].ID);
 					}
+				} else {
+					// Oh no! There has been an error with the request!
 				}
-			} else {
-				// Oh no! There has been an error with the request!
 			}
-		}
-	};
-	xhr.send();
+		};
+		xhr.send(jsonPayload);
+	}
+	catch (err){
+		console.log(err);
+	}
 }
 
 function updateContact (id) {
@@ -627,7 +628,7 @@ function saveContact (id) {
 		xhr.send(jsonPayload);
 	}
 	catch (err) {
-		// error message
+		console.log(err);
 	}
 }
 
