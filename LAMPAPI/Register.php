@@ -33,7 +33,7 @@
             if ($stmt->execute())
             {
                 $last_id = $stmt->insert_id;
-                returnWithInfo($inData["firstName"], $inData["lastName"], $last_id);
+                returnWithInfo($inData["firstName"], $inData["lastName"], $inData["login"], $last_id);
             }
             else
             {
@@ -59,8 +59,8 @@
         sendResultInfoAsJson($retValue);
     }
 
-    function returnWithInfo($firstName, $lastName, $id) {
-        $retValue = '{"id":' . $id . ', "firstName":"' . $firstName . '", "lastName":"' . $lastName . '", "error":""}';
+    function returnWithInfo($firstName, $lastName, $login, $id) {
+        $retValue = '{"id":' . $id . ', "firstName":"' . $firstName . '", "lastName":"' . $lastName . '", "login":"' . $login . '", "error":""}';
         sendResultInfoAsJson($retValue);
     }
 
