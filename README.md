@@ -23,7 +23,12 @@ JSON Input:
 
 
 ## Read.php
-Reads all of the information from the Contacts database. No JSON Input needed.
+Returns the contact information of a specific User.
+
+JSON Input:
+{
+    "UserId": "1"
+}
 
 
 ## CreateContact.php
@@ -67,4 +72,31 @@ JSON Input:
     "lastName":"Leinecker",
     "login":"RickL",
     "password" : "COPISCOOL"
+}
+
+
+## UpdateContact.php
+Updates the contact information for the contact
+
+JSON Input:
+{
+    "contactId": "1",
+    "newData": {
+        "firstName": "First",
+        "lastName": "Last",
+        "phone": "1234567891",
+        "email": "email@mail.com"
+    }
+}
+
+
+## UpdateUser.php
+Updates the User information for an existing User
+
+JSON Input:
+{
+    "UserId": "1",
+    "newFirstName": "New",
+    "newLastName": "New",
+    "newUserName": "New"
 }
