@@ -9,6 +9,7 @@
     <link href="css/styles.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="./output.css" rel="stylesheet">
 </head>
 
 <body class="landing" onload="readContacts(); updateUserInitials();">
@@ -27,7 +28,7 @@
 
                         <!-- Dropdown content -->
                         <div class="dropdown-content" id="userDropdown">
-                            <a href="#">Profile</a>
+                            <a href="#" onclick="openProfilePopup()">Profile</a>
                             <a href="#">Settings</a>
                             <a href="#" onclick="doLogout()">Logout</a>
                         </div>
@@ -36,6 +37,36 @@
             </nav>
         </div>
     </header>
+
+    <div id="landingPopupBox" class="popupBox hidden">
+		
+	</div>
+
+    <div id="profilePopup" class="popup">
+        <div class="popup-content">
+            <span class="close" onclick="closeProfilePopup()">&times;</span>
+            <h2>Update Profile</h2>
+            <div class="input-container">
+                <span>First Name:</span>
+                <input type="text" id="newFirstName" placeholder="New First Name">
+            </div>
+            <div class="input-container">
+                <span>Last Name:</span>
+                <input type="text" id="newLastName" placeholder="New Last Name">
+            </div>
+            <div class="input-container">
+                <span>Username:</span>
+                <input type="text" id="newUsername" placeholder="New Username">
+            </div>
+           
+            <div class="popup-Button">
+                <button type="submit" class="buttons" onclick="updateProfile()">Update</button>
+                <span id="profileUpdateResult"></span>
+            </div>
+
+        </div>
+        
+    </div>
 
     <div class="landing-content">
         <div class="search-container">

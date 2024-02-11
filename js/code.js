@@ -4,6 +4,7 @@ const extension = 'php';
 let userId = 0;
 let firstName = "";
 let lastName = "";
+let username = "";
 
 function doLogin() {
 	userId = 0;
@@ -51,9 +52,8 @@ function doLogin() {
 
 				firstName = jsonObject.firstName;
 				lastName = jsonObject.lastName;
+				username = jsonObject.login;
 				saveCookie();
-				// Debugging: Log userId to the console
-				//console.log("User ID:", userId);
 
 				window.location.href = "landing.html";
 			}
@@ -68,22 +68,22 @@ function doLogin() {
 
 // Function to get user initials
 function getUserInitials() {
-    readCookie();
+	readCookie();
 	console.log("first name:", firstName);
 	console.log("last name:", lastName);
-    const initials = (firstName.charAt(0) + lastName.charAt(0)).toUpperCase();
+	const initials = (firstName.charAt(0) + lastName.charAt(0)).toUpperCase();
 	console.log("intials", initials);
-    return initials;
+	return initials;
 }
 
 // Function to update the user initials in the HTML
 function updateUserInitials() {
-    const userInitialsDiv = document.getElementById("userInitials");
+	const userInitialsDiv = document.getElementById("userInitials");
 
-    if (userInitialsDiv) {
-        const initials = getUserInitials();
-        userInitialsDiv.textContent = initials;
-    }
+	if (userInitialsDiv) {
+		const initials = getUserInitials();
+		userInitialsDiv.textContent = initials;
+	}
 }
 
 function togglePasswordVisibility(passwordFieldId) {
@@ -287,6 +287,7 @@ function doRegister() {
 	userId = 0;
 	firstName = "";
 	lastName = "";
+	username = "";
 
 	// Retrieve values from input fields in the HTML form
 	let firstNameValue = document.getElementById("firstName").value;
@@ -298,9 +299,15 @@ function doRegister() {
 	// Clear any previous registration result message
 	document.getElementById("signupResult").innerHTML = "";
 
+	// Regular expressions for validation
+	let nameRegex = /^[A-Za-z]+$/;
+	let usernameRegex = /^[A-Za-z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
+	let passwordRequirements = confirmPasswordRequirements(passwordValue);
+
 
 	// Check for empty fields
-	if (!firstNameValue || !lastNameValue || !loginValue || !passwordValue || !confirmPasswordRequirements(passwordValue).metRequirements) {
+	if (!firstNameValue || !lastNameValue || !loginValue || !passwordValue || !passwordRequirements.metRequirements
+		|| !nameRegex.test(firstNameValue) || !nameRegex.test(lastNameValue) || !usernameRegex.test(loginValue)) {
 		if (!firstNameValue) {
 			highlightFieldError('firstName', 'First Name is required');
 		}
@@ -315,8 +322,23 @@ function doRegister() {
 
 		if (!passwordValue) {
 			highlightFieldError('loginPassword', 'Password is required');
-		} else if (!confirmPasswordRequirements(passwordValue).metRequirements) {
+		} else if (!passwordRequirements.metRequirements) {
 			highlightFieldError('loginPassword', 'Password does not meet requirements');
+		}
+
+		// Validate first name
+		if (!nameRegex.test(firstNameValue)) {
+			highlightFieldError('firstName', 'First Name can only contain letters');
+		}
+
+		// Validate last name
+		if (!nameRegex.test(lastNameValue)) {
+			highlightFieldError('lastName', 'Last Name can only contain letters');
+		}
+
+		// Validate login (username)
+		if (!usernameRegex.test(loginValue)) {
+			highlightFieldError('loginName', 'Username can only contain letters, numbers, and symbols');
 		}
 
 		return;
@@ -358,16 +380,25 @@ function doRegister() {
 
 					// Check if registration was successful
 					if (userId < 1) {
-						document.getElementById("signupResult").innerHTML = "Registration failed. Please check your details.";
+						if (jsonObject.error) {
+							document.getElementById("signupResult").innerHTML = jsonObject.error;
+						} else {
+							document.getElementById("signupResult").innerHTML = "Registration Failed. Check your Details!";
+						}
+
+
 					} else {
 						// Registration successful
 						firstName = jsonObject.firstName;
 						lastName = jsonObject.lastName;
+						username = jsonObject.login;
 
 						// Save user information in a cookie (not shown in the provided code)
 						saveCookie();
 
+
 						// Redirect the user to the "login.html" page
+						window.localStorage.setItem('registrationSuccessful', 'true');
 						window.location.href = "login.html";
 					}
 				} else {
@@ -384,11 +415,29 @@ function doRegister() {
 	}
 }
 
+function checkRegistration() {
+	// Check if registration was successful
+	var registrationSuccessful = window.localStorage.getItem('registrationSuccessful');
+	if (registrationSuccessful === 'true') {
+		// Display the popup box
+		document.getElementById("popupBox").classList.remove("hidden");
+
+		// After 10 seconds, hide the popup box
+		setTimeout(function () {
+			document.getElementById("popupBox").classList.add("hidden");
+		}, 5000);
+
+		// Clear the flag from local storage
+		window.localStorage.removeItem('registrationSuccessful');
+	}
+}
+
+
 function saveCookie() {
 	let minutes = 20;
 	let date = new Date();
 	date.setTime(date.getTime() + (minutes * 60 * 1000));
-	document.cookie = "firstName=" + firstName + ",lastName=" + lastName + ",userId=" + userId + ";expires=" + date.toGMTString();
+	document.cookie = "firstName=" + firstName + ",lastName=" + lastName + ",userId=" + userId + ",username=" + username + ";expires=" + date.toGMTString();
 }
 
 function readCookie() {
@@ -406,6 +455,9 @@ function readCookie() {
 		}
 		else if (tokens[0] == "userId") {
 			userId = parseInt(tokens[1].trim());
+		}
+		else if (tokens[0] == "username") {
+			username = parseInt(tokens[1].trim());
 		}
 	}
 
@@ -442,8 +494,8 @@ function addContactRow(firstName, lastName, Phone, Email, contactID) {
 	text += "<td id='last_Name" + contactID + "'><span>" + lastName + "</span></td>";
 	text += "<td id='phone" + contactID + "'><span>" + Phone + "</span></td>";
 	text += "<td id='email" + contactID + "'><span>" + Email + "</span></td>";
-	text += "<td>" + "<button type='button' class='delBtn' onclick='deleteContact(" + contactID + ")'>" +  "Delete Contact " + contactID + "</button>" 
-		+ "<button type='button' class='editBtn' onclick='updateContact(" + contactID + ")'>" +  "Edit Contact " + contactID + "</button>" + "</td>";
+	text += "<td>" + "<button type='button' class='delBtn' onclick='deleteContact(" + contactID + ")'>" + "Delete Contact " + contactID + "</button>"
+		+ "<button type='button' class='editBtn' onclick='updateContact(" + contactID + ")'>" + "Edit Contact " + contactID + "</button>" + "</td>";
 	text += "</tr>"
 	tableBody.innerHTML = text;
 	hideAddContactForm();
@@ -496,8 +548,7 @@ function addContact() {
 function deleteContact(id) {
 	let firstName = document.getElementById("first_Name" + id).innerText;
 	let lastName = document.getElementById("last_Name" + id).innerText;
-	if(confirm("Are you sure you want to delete contact " + firstName + " " + lastName + "?") == true)
-	{
+	if (confirm("Are you sure you want to delete contact " + firstName + " " + lastName + "?") == true) {
 		let userData = {
 			firstName: firstName,
 			lastName: lastName
@@ -540,7 +591,7 @@ function readContacts() {
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST", url, true);
 	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-	try{
+	try {
 		xhr.onreadystatechange = function () {
 			if (xhr.readyState == 4) {
 				if (xhr.status == 200) {
@@ -559,12 +610,12 @@ function readContacts() {
 		};
 		xhr.send(jsonPayload);
 	}
-	catch (err){
+	catch (err) {
 		console.log(err);
 	}
 }
 
-function updateContact (id) {
+function updateContact(id) {
 	let tmpRow = document.getElementById("row" + id);
 	let tmpFirst = document.getElementById("first_Name" + id).innerText;
 	let tmpLast = document.getElementById("last_Name" + id).innerText;
@@ -577,13 +628,13 @@ function updateContact (id) {
 	text += "<td><input id='newLastName" + id + "' value='" + tmpLast + "'></input></td>";
 	text += "<td><input id='newPhone" + id + "' value='" + tmpPhone + "'></input></td>";
 	text += "<td><input id='newEmail" + id + "' value='" + tmpEmail + "'></input></td>";
-	text += "<td>" + "<button type='button' class='delBtn' onclick='deleteContact(" + id + ")'>" +  "Delete Contact " + id + "</button>" 
-		+ "<button type='button' class='saveBtn' onclick='saveContact(" + id + ")'>" +  "Save Contact " + id + "</button>" + "</td>";
+	text += "<td>" + "<button type='button' class='delBtn' onclick='deleteContact(" + id + ")'>" + "Delete Contact " + id + "</button>"
+		+ "<button type='button' class='saveBtn' onclick='saveContact(" + id + ")'>" + "Save Contact " + id + "</button>" + "</td>";
 	tmpRow.innerHTML = text;
 }
 
-function saveContact (id) {
-	console.log("Saved: " + id );
+function saveContact(id) {
+	console.log("Saved: " + id);
 	let savedRow = document.getElementById("row" + id);
 	let savedFirst = document.getElementById("newFirstName" + id).value;
 	let savedLast = document.getElementById("newLastName" + id).value;
@@ -595,8 +646,8 @@ function saveContact (id) {
 	text += "<td id='last_Name" + id + "'><span>" + savedLast + "</span></td>";
 	text += "<td id='phone" + id + "'><span>" + savedPhone + "</span></td>";
 	text += "<td id='email" + id + "'><span>" + savedEmail + "</span></td>";
-	text += "<td>" + "<button type='button' class='delBtn' onclick='deleteContact(" + id + ")'>" +  "Delete Contact " + id + "</button>" 
-		+ "<button type='button' class='editBtn' onclick='updateContact(" + id + ")'>" +  "Edit Contact " + id + "</button>" + "</td>";
+	text += "<td>" + "<button type='button' class='delBtn' onclick='deleteContact(" + id + ")'>" + "Delete Contact " + id + "</button>"
+		+ "<button type='button' class='editBtn' onclick='updateContact(" + id + ")'>" + "Edit Contact " + id + "</button>" + "</td>";
 	savedRow.innerHTML = text;
 
 	let userData = {
@@ -632,40 +683,55 @@ function saveContact (id) {
 	}
 }
 
-function searchContacts () {
-	tableBody = document.getElementById("tableBody");
-	tableBody.innerHTML =  "";
-	let searchTerm = document.getElementById("searchBar").value;
-	let userData = {
-		search: searchTerm,
-	};
-	console.log(searchTerm);
-	let jsonPayload = JSON.stringify(userData);
-	let url = urlBase + '/Search.' + extension;
-	let xhr = new XMLHttpRequest();
-	xhr.open("POST", url, true);
-	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-	xhr.onreadystatechange = function () {
-		if (xhr.readyState == 4) {
-			if (xhr.status == 200) {
-				console.log("Searching")
-				console.log("UID: " + userId);
-				let jsonData = JSON.parse(xhr.responseText);
-				console.log(jsonData.results);
-				console.log(xhr.responseText);
-				for (i = 0; i < jsonData.results.length; i++) {
-					console.log("loop entered");
-					let jsonUserIDstr = jsonData.results[i].UserID;
-					let jsonUserIDint = parseInt(jsonUserIDstr, 10);
-					if (userId == jsonUserIDint) {
-						addContactRow(jsonData.results[i].FirstName, jsonData.results[i].LastName, jsonData.results[i].Phone, jsonData.results[i].Email, jsonData.results[i].UserID);
-					}
-				}
-			}
-		}
-	}
-	xhr.send(jsonPayload);
+function searchContacts() {
+    tableBody.innerHTML = "";
+
+    let searchTerm = document.getElementById("searchBar").value.trim();
+
+    // If the search term is empty, return and do not perform the search
+    if (searchTerm === "") {
+		refreshContacts();
+        return;
+    }
+
+    let userData = {
+        search: searchTerm,
+    };
+
+    let jsonPayload = JSON.stringify(userData);
+    let url = urlBase + '/Search.' + extension;
+    let xhr = new XMLHttpRequest();
+
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            let jsonData = JSON.parse(xhr.responseText);
+            console.log(jsonData.results);
+            for (let i = 0; i < jsonData.results.length; i++) {
+                let jsonUserIDstr = jsonData.results[i].UserID;
+                let jsonUserIDint = parseInt(jsonUserIDstr, 10);
+                if (userId == jsonUserIDint) {
+                    addContactRow(jsonData.results[i].FirstName, jsonData.results[i].LastName, jsonData.results[i].Phone, jsonData.results[i].Email, jsonData.results[i].UserID);
+                }
+            }
+        }
+    };
+
+    xhr.send(jsonPayload);
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+    // Add event listener to the search input field to trigger searchContacts on keyup
+    var searchBar = document.getElementById("searchBar");
+    if (searchBar) {
+        searchBar.addEventListener("keyup", searchContacts);
+    } else {
+        console.error("Element with ID 'searchBar' not found.");
+    }
+});
+
 
 function refreshContacts() {
 	tableBody = document.getElementById("tableBody");
@@ -686,5 +752,123 @@ function playGif() {
 		document.getElementById("staticImage").src = "/images/penguinImage.jpg";
 		// Re-enable double-click after the GIF finishes playing
 		document.getElementById("staticImage").ondblclick = playGif;
-	}, 3500); //  duration of GIF in milliseconds (6.8 seconds)
+	}, 3680); //  duration of GIF in milliseconds (6.8 seconds)
+}
+
+function openProfilePopup() {
+	readCookie();
+	document.getElementById("profilePopup").style.display = "block";
+	// Populate input fields with user information
+	document.getElementById("newFirstName").value = firstName;
+	document.getElementById("newLastName").value = lastName;
+	document.getElementById("newUsername").value = username;
+}
+
+// Function to close the profile popup
+function closeProfilePopup() {
+	document.getElementById("profilePopup").style.display = "none";
+}
+
+// Function to update user profile
+function updateProfile() {
+	readCookie();
+	let newFirstNameValue = document.getElementById("newFirstName").value;
+	let newLastNameValue = document.getElementById("newLastName").value;
+	let newUsernameValue = document.getElementById("newUsername").value;
+
+	// Regular expressions for validation
+	let nameRegex = /^[A-Za-z]+$/;
+	let usernameRegex = /^[A-Za-z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
+
+	if (!newFirstNameValue || !newLastNameValue || !newUsernameValue
+		|| !nameRegex.test(newFirstNameValue) || !nameRegex.test(newLastNameValue)
+		|| !usernameRegex.test(newUsernameValue)) {
+
+		// Check for empty fields
+		if (!firstNameValue) {
+			highlightFieldError('newFirstName', 'First Name is required');
+		}
+
+		// Check for empty fields
+		if (!lastNameValue) {
+			highlightFieldError('lastnewLastNameName', 'Last Name is required');
+		}
+
+		// Check for empty fields
+		if (!newUsernameValue) {
+			highlightFieldError('newUsername', 'Username is required');
+		}
+
+		// Validate first name
+		if (!nameRegex.test(newFirstNameValue)) {
+			highlightFieldError('newFirstName', 'First Name can only contain letters');
+		}
+
+		// Validate last name
+		if (!nameRegex.test(newLastNameValue)) {
+			highlightFieldError('newLastName', 'Last Name can only contain letters');
+		}
+
+		// Validate username
+		if (!usernameRegex.test(newUsernameValue)) {
+			highlightFieldError('newUsername', 'Username can only contain letters, numbers, and symbols');
+		}
+		return;
+	}
+
+	let updatedUserData = {
+		userId: userId,
+		newFirstName: newFirstNameValue,
+		newLastName: newLastNameValue,
+		newUsername: newUsernameValue
+	};
+
+	let jsonPayload = JSON.stringify(updatedUserData);
+
+	let url = urlBase + '/UpdateUser.' + extension;
+
+	let xhr = new XMLHttpRequest();
+
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+
+
+	try {
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState == 4) {
+				//console.log("jsonObject:", jsonObject);
+				console.log("xhr.status:", xhr.status);
+				if (xhr.status == 200) {
+					let jsonObject = JSON.parse(xhr.responseText);
+					if (jsonObject.error === "") {
+						// Update successful
+						firstName = jsonObject.firstName;
+						lastName =  jsonObject.lastName;
+						username = jsonObject.Username;
+						saveCookie();
+						updateUserInitials();
+						closeProfilePopup();
+						document.getElementById("landingPopupBox").innerHTML = "Updated Successfully!";
+						document.getElementById("landingPopupBox").classList.remove("hidden");
+						setTimeout(function () {
+							document.getElementById("landingPopupBox").classList.add("hidden");
+						}, 5000);
+					} else {
+						// Update failed
+						document.getElementById("landingPopupBox").innerHTML = jsonObject.error;
+						document.getElementById("landingPopupBox").classList.remove("hidden");
+					}
+				} else {
+					// Handle errors during profile update
+					document.getElementById("landingPopupBox").innerHTML = "Error during profile update. Please try again later.";
+					document.getElementById("landingPopupBox").classList.remove("hidden");
+				}
+			}
+		};
+		// Send the JSON payload to the server
+		xhr.send(jsonPayload);
+	} catch (err) {
+		// Handle exceptions
+		alert(err.message);
+	}
 }

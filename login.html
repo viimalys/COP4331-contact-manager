@@ -9,9 +9,10 @@
 	<link href="css/styles.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+	<link href="./output.css" rel="stylesheet">
 </head>
 
-<body id = "loginPage">
+<body id = "loginPage" onload="checkRegistration()">
 	<header>
 		<div class="banner">
 			<nav>
@@ -26,6 +27,10 @@
 			</nav>
 		</div>
 	</header>
+
+	<div id="popupBox" class="popupBox hidden">
+		Registration Successful!
+	</div>
 
 	<div id="loginSignupDiv">
 		<div id="loginDiv">
@@ -46,7 +51,7 @@
 
 
 		<div id="signupDiv">
-			<span id="signupText">Don't have an account?</span>
+			<span id="signupText">Don't have an account?</span><br />
 			<button type="button" id="signupButton" class="buttons"
 				onclick="window.location.href = 'signup.html';">Register</button>
 		</div>
