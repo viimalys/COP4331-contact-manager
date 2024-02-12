@@ -45,21 +45,25 @@
         }
     }
 
-    function getRequestInfo() {
+    function getRequestInfo()
+    {
         return json_decode(file_get_contents('php://input'), true);
     }
 
-    function sendResultInfoAsJson($obj) {
+    function sendResultInfoAsJson($obj)
+    {
         header('Content-type: application/json');
         echo $obj;
     }
 
-    function returnWithError($err) {
+    function returnWithError($err)
+    {
         $retValue = '{"id":0, "firstName":"", "lastName":"", "error":"' . $err . '"}';
         sendResultInfoAsJson($retValue);
     }
 
-    function returnWithInfo($firstName, $lastName, $login, $id) {
+    function returnWithInfo($firstName, $lastName, $login, $id)
+    {
         $retValue = '{"id":' . $id . ', "firstName":"' . $firstName . '", "lastName":"' . $lastName . '", "login":"' . $login . '", "error":""}';
         sendResultInfoAsJson($retValue);
     }

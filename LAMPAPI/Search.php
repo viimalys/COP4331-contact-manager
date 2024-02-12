@@ -12,9 +12,9 @@
     else
     {
         // Prepare the SQL statement to search the contact.
-        $stmt = $conn->prepare("SELECT ID, FirstName, LastName, Phone, Email, UserID FROM Contacts WHERE FirstName LIKE ? OR LastName LIKE ?");
+        $stmt = $conn->prepare("SELECT ID, FirstName, LastName, Phone, Email, UserID FROM Contacts WHERE FirstName LIKE ? OR LastName LIKE ? OR Phone LIKE ? OR Email LIKE ?");
         $searchTerm = "%" . $inData["search"] . "%";
-        $stmt->bind_param("ss", $searchTerm, $searchTerm);
+        $stmt->bind_param("ssss", $searchTerm, $searchTerm, $searchTerm, $searchTerm);
         $stmt->execute();
         $result = $stmt->get_result();
 
