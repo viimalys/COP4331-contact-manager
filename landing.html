@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <title>TidalTies Landing Page</title>
+    <script type="text/javascript" src="js/md5.js"></script>
+    <script type="text/javascript" src="js/code.js"></script>
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body class="landing" onload="readContacts(); updateUserInitials();">
+    <header>
+        <div class="banner">
+            <nav>
+                <div class="logo">
+                    <a href="landing.html" class="active">TidalTies</a>
+                </div>
+
+                <div class="right-links">
+                    <a href="about.html">About Us</a>
+                    <div class="user-dropdown">
+                        <!-- Display user initials inside a circle -->
+                        <div class="circle" id="userInitials">AB</div>
+
+                        <!-- Dropdown content -->
+                        <div class="dropdown-content" id="userDropdown">
+                            <a href="#" onclick="openProfilePopup()">Profile</a>
+                            <a href="#" onclick="doLogout()">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div id="landingPopupBox" class="popupBox hidden">	
+	</div>
+
+        <div id="profilePopup" class="popup">
+        <div class="popup-content">
+            <span class="close" onclick="closeProfilePopup()">&times;</span>
+            <h2>Update Profile</h2>
+            <div class="input-container">
+                <span>First Name:</span>
+                <input type="text" id="newFirstName" placeholder="New First Name" oninput="removeFieldError('newFirstName')">
+            </div>
+            <div class="input-container">
+                <span>Last Name:</span>
+                <input type="text" id="newLastName" placeholder="New Last Name" oninput="removeFieldError('newLastName')">
+            </div>
+            <div class="input-container">
+                <span>Username:</span>
+                <input type="text" id="newUsername" placeholder="New Username" oninput="removeFieldError('newUsername')">
+            </div>
+           
+            <div class="popup-Button">
+                <button type="submit" class="buttons" onclick="updateProfile()">Update</button>
+                <span id="profileUpdateResult"></span>
+            </div>
+
+        </div>  
+    </div>
+    <div id="addContactPopup" class="popup">
+        <div id="addContactForm">
+            <span class="close" onclick="removeAddContactErrors();clearContactFields();hideAddContactForm();">&times;</span>
+            <h2>Add New Contact</h2>
+            <div class="input-container">
+                <!-- <span>First Name:</span> -->
+                <!-- <span id="firstError"></span> -->
+                <input type="text" id="firstNameInput" class="newContact" placeholder="First Name" name="firstNameInput" required oninput="removeFieldError('firstNameInput')">
+            </div>
+
+            <div class="input-container">
+                <!-- <span>Last Name:</span> -->
+                <!-- <span id="lastError"></span> -->
+                <input type="text" id="lastNameInput" class="newContact" placeholder="Last Name" name="lastNameInput" required oninput="removeFieldError('lastNameInput')">
+            </div>
+
+            <div class="input-container">
+                <!-- <span>Phone #:</span> -->
+                <!-- <span id="phoneError"></span> -->
+                <input type="text" id="phoneInput" class="newContact" placeholder="Phone Number" name="phoneInput" required oninput="removeFieldError('phoneInput')">
+            </div>
+            <div class="input-container">
+                <!-- <span>Email:</span> -->
+                <!-- <span id="emailError"></span> -->
+                <input type="text" id="emailInput" class="newContact" placeholder="Email Address" name="emailInput" required oninput="removeFieldError('emailInput')">
+            </div>
+            <button type="button" id="addButton" class="buttons" onclick="addContact()">Add Contact</button> 
+            <!--<button type="button" id="cancelButton" class="buttons" onclick="hideAddContactForm()">Cancel</button>-->
+        </div>
+    </div>
+
+    <div class="landing-content">
+        <div class="search-container">
+            <input type="search" id="searchBar" placeholder="Search Contacts">
+            <!-- <span class="search-icon"><i class='bx bx-search-alt-2' style='color:#333333'></i></span> -->
+        </div>
+
+        <button type="button" id="addContactButton" class="buttons" onclick="showAddContactForm()">Add New Contact</button>
+
+        <div id="contactsDiv">
+            <table id="contactsTable">
+                <thead>
+                    <tr>
+                        <th id="firstCol">First Name</th>
+                        <th id="lastCol">Last Name</th>
+                        <th id="phoneCol">Phone</th>
+                        <th id="emailCol">Email</th>
+                        <th id="buttonCol">Buttons</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <footer>
+		<a href="https://github.com/viimalys/COP4331-contact-manager" target=”_blank”><i class='bx bxl-github' style='color:#faf9f6'  ></i></a>
+	</footer>
+</body>
+
+</html>

@@ -1,30 +1,53 @@
+<!DOCTYPE html>
 <html lang="en-US" dir="ltr">
+
 <head>
 	<meta charset="utf-8">
-	<title>COP 4331 Log In or Sign Up</title>
+	<title>TidalTies</title>
 	<script type="text/javascript" src="js/md5.js"></script>
 	<script type="text/javascript" src="js/code.js"></script>
-    <link href="css/styles.css" rel="stylesheet">	
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+	<link href="css/styles.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
-  
-<body> 
-  <h1 id="title">COP 4331 Contacts</h1>
-<form id="loginSignupForm">
-  <div id="loginDiv">
-	  <header id="inner-title">PLEASE LOG IN</header>
-  
-	  <input type="text" id="loginName" placeholder="Username"      required/><br />
 
-	  <input type="password" id="loginPassword"           placeholder="Password" required/><br />
+<body class="home">
+	<header>
+		<div class="banner">
+			<nav>
+				<div class="logo">
+					<a href="index.html" class="active">TidalTies</a>
+				</div>
+				<div class="right-links">
+					<a href="aboutNotLoggedIn.html">About us</a>
+					<a href="login.html">Login</a>
+					<a href="signup.html">Sign Up</a>
+				</div>
+			</nav>
+		</div>
+	</header>
 
-	<button type="submit" id="loginButton" class="buttons" onclick="doLogin();">Log In </button>
-	<span id="loginResult"></span>
-  </div>
-  <div id= "signupDiv">
-	<button type="button" id="signupButton" class="buttons" > Create new account</button>
-  </div>
-  
-</form>
+	<main>
+		<div class="content">
+			<div class="text-container">
+				<h1 id="mainPageTitle">A sea of contacts right at your fingertips.</h1>
+				<h2 id="mainPageSubTitle">Don't let your connections wash away, keep them all stored in one place using
+					TidalTies.</h2>
+				<div class="button-container">
+					<button type="button" id="getStartedButton" class="buttons"
+						onclick="window.location.href = 'login.html';">Get Started</button>
+				</div>
+			</div>
+			<div class="image-container">
+				<img src="/images/penguinImage.jpg" alt="Static Image" class="image" id="staticImage" ondblclick="playGif();">
+				<!--<img src="/images/scubaPenguin.gif" alt="GIF" class="gif" id="animatedGif">-->
+			</div>
+		</div>
+	</main>
+
+	<footer>
+		<a href="https://github.com/viimalys/COP4331-contact-manager" target=”_blank”><i class='bx bxl-github' style='color:#faf9f6'  ></i></a>
+	</footer>
 </body>
+
 </html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+
+<head>
+	<meta charset="utf-8">
+	<title>TidalTies Log In</title>
+	<script type="text/javascript" src="js/md5.js"></script>
+	<script type="text/javascript" src="js/code.js"></script>
+	<link href="css/styles.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+	<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body id = "loginPage" onload="checkRegistration()">
+	<header>
+		<div class="banner">
+			<nav>
+				<div class="logo">
+					<a href="index.html">TidalTies</a>
+				</div>
+				<div class="right-links">
+					<a href="aboutNotLoggedIn.html">About us</a>
+					<a href="login.html" class="active">Login</a>
+					<a href="signup.html">Sign Up</a>
+				</div>
+			</nav>
+		</div>
+	</header>
+
+	<div id="popupBox" class="popupBox hidden">
+		Registration Successful!
+	</div>
+
+	<div id="loginSignupDiv">
+		<div id="loginDiv">
+			<!--<h1 id="title">Welcome to TidalTies!</h1>-->
+			<div id="loginForm">
+				<h2 id="inner-title">Login and sea the contatcs roll in!</h2>
+				<input type="username" id="loginName" placeholder="Username" oninput="removeFieldError('loginName')"required /><br />
+
+				<div class="password-container">
+					<input type="password" id="loginPassword" placeholder="Password" oninput="togglePasswordToggle(); removeFieldError('loginPassword')" required />
+					<span class="password-toggle" onclick="togglePasswordVisibility('loginPassword')"><i class='bx bx-show' style='color:#ffffff'></i></span> 
+				</div>
+
+				<button type="submit" id="loginButton" class="buttons" onclick="doLogin();">Log In </button>
+				<span id="loginResult"></span>
+			</div>
+		</div>
+
+
+		<div id="signupDiv">
+			<span id="signupText">Don't have an account?</span><br />
+			<button type="button" id="signupButton" class="buttons"
+				onclick="window.location.href = 'signup.html';">Register</button>
+		</div>
+	</div>
+
+	<footer>
+		<a href="https://github.com/viimalys/COP4331-contact-manager" target=”_blank”><i class='bx bxl-github' style='color:#faf9f6'  ></i></a>
+	</footer>
+
+</body>
+
+</html>
