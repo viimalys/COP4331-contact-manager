@@ -22,7 +22,8 @@
 		{
 			if(md5($inData["password"]) === $row['Password'])
 			{
-				returnWithInfo($inData["firstName"], $inData["lastName"], $inData["login"], $last_id);
+				//returnWithInfo($inData["firstName"], $inData["lastName"], $inData["login"], $last_id);
+				returnWithInfo($row['firstName'], $row['lastName'], $inData["login"], $row['ID']);
 			}
 			else
 			{
@@ -57,7 +58,7 @@
 	
     function returnWithInfo($firstName, $lastName, $login, $id)
 	{
-        $retValue = '{"id":' . $id . ', "firstName":"' . $firstName . '", "lastName":"' . $lastName . '", "login":"' . $login . '", "error":""}';
+        $retValue = '{"id":"' . $id . '", "firstName":"' . $firstName . '", "lastName":"' . $lastName . '", "login":"' . $login . '", "error":""}';
         sendResultInfoAsJson($retValue);
     }
 	

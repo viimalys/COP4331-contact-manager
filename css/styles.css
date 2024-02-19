@@ -1,0 +1,824 @@
+/*
+COLOR PALETTE
+- Mint cream: #EEF4ED
+- Powder Blue: #8DA9C4
+- Oxford Blue: #0B2545
+- Berkeley Blue: #13315C
+- Yale Blue: #134074
+
+---------------------------
+#EEF5FF rgb(238, 245, 255) -- lightest color
+#B4D4FF rgb(180, 212, 255)
+#86B6F6 rgb(134, 182, 246)
+#176B87 rgb(23, 107, 135 -- darkest color
+
+*/
+
+body 
+{
+    margin: 0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    /*background-image: url(../images/background-image.jpg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;*/
+    background-color: #FAF9F6;
+}
+
+#loginPage, #signupPage, .landing, .about{
+    background-color: #97d0ff;
+}
+
+#title 
+{
+    font-size: 40px;
+    max-width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    font-family: 'Great Vibes', cursive;
+    color: #FFFFFF; /*Should probably change color bc too light*/
+}
+
+
+#loginSignupDiv, #signupLoginDiv{
+    flex-grow: 1;
+    margin: auto;
+    margin-top: 15vh;
+    margin-bottom: 5vh;
+    max-width: 50%;
+    text-align: center;
+    font-size: 30px;
+
+}
+
+.landing-content{
+    margin: auto 100px;
+    margin-top: 25vh;
+}
+
+
+#loginDiv, #signupDiv, #registerDiv, #backToLoginDiv{
+    margin: 0 auto; 
+    margin-bottom: 2vh; 
+    border: 2px solid rgba(255, 255, 255, .2);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    background-color: rgba(102, 204, 255, 0.5);
+    border-radius: 10px;
+    padding: 25px;
+}
+
+#loginName, #loginPassword, 
+#firstName, #lastName
+{
+    max-width: 100%;
+    font-size: 30px;
+    text-align: left;
+    padding-left: 5%;
+    padding-right: 15%;
+    background: transparent;
+    border: none;
+    outline: none;
+    border: 2px solid rgba(255, 255, 255, .2);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .3);
+    border-radius: 40px;
+    color: #FFFFFF;
+}
+
+.newContact
+{
+    justify-content: center;
+    width: 60%;
+    font-size: 30px;
+    text-align: left;
+    padding-left: 5%;
+    padding-right: 5%;
+    background: transparent;
+    border: none;
+    outline: none;
+    border: 2px solid rgba(255, 255, 255, .2);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .3);
+    border-radius: 40px;
+}
+
+.popupBox {
+    position: fixed;
+    top: calc(50px + 40px); 
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ffffff;
+    color: #0B2545; 
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    z-index: 1000; 
+    transition: opacity 0.5s ease-in-out;
+}
+
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    border-radius: 10px;
+}
+
+.popup-content{
+    background-color: rgba(102, 204, 255, 1.0);
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 15px;
+    width: 30%;
+}
+
+#addContactForm {
+    background-color: rgba(102, 204, 255, 1.0);
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 15px;
+    width: 50%
+}
+
+#firstNameInput, #lastNameInput,
+#phoneInput, #emailInput{
+    background-color: white;
+    width: 60%;
+    justify-content: end;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.popup-content h2{
+    font-size: 30px;
+}
+
+.popup-content input[type="text"] {
+    font-size: 20px;
+}
+
+.popup-content h2, .popup-Button{
+    text-align: center;
+}
+
+#addContactForm h2{
+    text-align: center;
+    font-size: 30px;
+}
+
+#addContactForm input[type="text"]{
+    text-align: left;
+    font-size: 28px;
+    width: 60%;
+    position: relative;
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px; /* Add some spacing between input pairs */
+}
+
+.input-container span {
+    width: 100px; 
+}
+
+.input-container input[type="text"]{
+    margin-left: 0;
+    display: flex;
+}
+
+
+#search{
+    margin: 1vh auto;
+    max-width: 100%;
+    font-size: 30px;
+    text-align: left;
+    padding-left: 5%;
+    padding-right: 15%;
+    background: white;
+    border: none;
+    outline: none;
+    border: 2px solid rgba(255, 255, 255, .2);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .3);
+    border-radius: 40px;
+}
+
+#passwordRequirements {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #FFFFFF;
+    display: none; /* Initially hide the password requirements */
+}
+
+#passwordRequirements span {
+    margin-left: 10px;
+}
+
+#loginPassword
+{
+    text-overflow: clip;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#loginName:focus::placeholder,
+#loginPassword:focus::placeholder,
+#firstName:focus::placeholder,
+#lastName:focus::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+#loginName::placeholder,
+#loginPassword::placeholder,
+#firstName::placeholder,
+#lastName::placeholder{
+    color: rgba(255, 255, 255, 0.7);
+}
+
+::placeholder{
+    color: black;
+}
+
+:focus::placeholder{
+    color: grey;
+}
+
+
+.search-container{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    margin: 0 auto;
+    transform: translateY(-50%);
+}
+
+.search-icon{
+    position: absolute;
+    right: 30%;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 30px;
+}
+
+#searchBar{
+    position: absolute;
+    width: 80%;
+    margin: -40px auto;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+}
+
+#search::placeholder{
+    color: #333333;
+}
+
+.password-container {
+    position: relative;
+}
+
+.password-toggle {
+    cursor: pointer;
+    position: absolute;
+    right: 3%;
+    top: 40%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    color: #FFFFFF;
+    display: none;
+}
+
+.shake {
+    animation: shake 0.6s;
+}
+
+@keyframes shake {
+    10%, 90% {
+        transform: translateX(-5px);
+    }
+    20%, 80% {
+        transform: translateX(5px);
+    }
+    30%, 50%, 70% {
+        transform: translateX(-5px);
+    }
+    40%, 60% {
+        transform: translateX(5px);
+    }
+}
+
+#signupText
+{
+    font-size: 20px;
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    font-family: 'Merriweather Sans', sans-serif;
+    color: #FFFFFF;
+}
+
+#loggedInDiv
+{
+    font-size: 30px;
+    width: 70%;
+    margin-left: 15%;
+    padding: 25px;
+    background-color: #b2b2b2;
+}
+
+#accessUIDiv
+{
+    font-size: 30px;
+    width: 70%;
+    margin-left: 15%;
+    padding: 25px;
+    background-color: #b2b2b2;
+}
+
+.buttons
+{
+    font-size: 30px;
+    border-radius: 25px;
+    width: 70%;
+    margin: 2% auto;
+    font-family: 'Merriweather Sans', sans-serif;
+    border: none;
+    outline: none;
+    border: 2px solid rgba(255, 255, 255, .2);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .3);
+}
+
+.buttons:hover
+{
+    background-color: #055C9D;
+    color: #FFFFFF;
+    opacity: 50%;
+    transform: scale(1.1); 
+    transition: background-color 0.3s ease, transform 0.3s ease; 
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.7); 
+    transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; 
+}
+
+#addContactButton, #addButton, #cancelButton{
+    display: flex;
+    justify-content: center;
+    align-self: center;
+}
+
+#contactsDiv
+{
+    width: 80%;
+    margin: auto auto; 
+    margin-bottom: 2vh; 
+    border: 2px solid rgba(255, 255, 255, .2);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    background-color: rgba(102, 204, 255, 0.5);
+    border-radius: 10px;
+    padding: 25px;
+}
+
+#contactsTable
+{
+    margin: auto auto;
+    width: 100%;
+    background-color: #EEF4ED;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+table{
+    /* border: 1px solid black; */
+    width: 100%;
+    table-layout: fixed;
+}
+
+th, td{
+    padding: 15px;
+    border: 1px solid black;
+}
+
+th{
+    text-align: center;
+}
+
+td{
+    text-align: left;
+}
+
+
+#firstCol, #lastCol, #phoneCol{
+    width: 50px;
+    max-width: 50px;
+}
+
+#emailCol{
+    width: 150px;
+    max-width: 150px;
+}
+
+#buttonCol{
+    width: 120px;
+    max-width: 120px;
+}
+
+tbody tr:hover
+{
+    background-color: #EEF5FF;
+}
+
+.tableInput
+{
+    /* margin: 1vh auto;
+    max-width: 100%;
+    font-size: 30px; */
+    width: 100%;
+    text-align: left;
+    /* padding-left: auto;
+    padding-right: auto; */
+    background: transparent;
+    outline: none;
+    border: 1px solid rgba(255, 255, 255, .2);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .3);
+    border-radius: 15px;
+}
+
+.tableButtons{
+    text-align: center;
+}
+
+.deleteButton, .updateButton, .saveButton, .copyButton{
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+}
+
+.tableImages{
+    width: 50px;
+    height: 50px;
+}
+
+.tableImages:hover{
+    filter:grayscale(.75);
+}
+
+#searchText
+{
+	font-size: 30px;
+}
+#colorText
+{
+	font-size: 30px;
+}
+
+input[type="username"],input[type="password"],input[type="text"]{
+    border-radius: 25px;
+    text-align: center;
+    width: 80%;
+    margin-bottom: 2%;
+    font-family: 'Merriweather Sans', sans-serif;
+}
+
+input[type="search"]{
+    border-radius: 25px;
+    text-align: center;
+    width: 60%;
+    font-family: 'Merriweather Sans', sans-serif;
+}
+
+
+#inner-title{
+    display: inline-block;
+    font-size: 0.8em;
+    width: 90%;
+    text-align: center;
+    margin: 0.5% auto 3%;
+    font-family: 'Merriweather Sans', sans-serif;
+    color: #FFFFFF;
+}
+
+#backToLogin-inner-title
+{
+    display: inline-block;
+    font-size: 0.8em;
+    width: 90%;
+    text-align: center;
+    margin-left: 5%;
+    margin-bottom: 2%;
+    font-family: 'Merriweather Sans', sans-serif;
+    color: #FFFFFF;
+}
+
+#loginResult, #signupResult{
+    display: inline-block;
+    font-size: 0.8em;
+    width: 90%;
+    text-align: center;
+    margin-left: 5%;
+    margin-bottom: 2%;
+    font-family: 'Merriweather Sans', sans-serif;
+    color: #95060a;
+}
+
+#userName{
+    display: inline-block;
+    width: 80%;
+    margin-left: 10%;
+    text-align: center;
+}
+
+#logoutButton{
+    width: 20%;
+    margin-left: 40%;
+}
+
+select{
+    width: 30%;
+    margin-left: 35%;
+    margin-top: 2%;
+    font-size: 0.75em;
+    font-family: 'Merriweather Sans', sans-serif;
+}
+
+#colorSearchResult{
+    display: none;
+}
+
+#colorAddResult{
+    display: inline-block;
+    font-size: 0.8em;
+    width: 90%;
+    text-align: center;
+    margin-left: 5%;
+    margin-top: 2%;
+    margin-bottom: 1%;
+    font-family: 'Merriweather Sans', sans-serif;
+    color: #95060a;
+}
+
+.banner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #0B2545;
+    align-items: center;
+    padding: 20px;
+    z-index: 1000;
+}
+
+.right-links {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-right: 5%;
+}
+
+.logo{
+    margin-right: auto;
+    font-size: 24px;
+}
+
+.user-initials{
+    margin: 0 10px;
+}
+
+.circle {
+    /*width: 40px;
+    height: 40px;*/
+    border-radius: 50%;
+    background-color: #FAF9F6;
+    color: #0B2545; 
+    padding: 8px;
+    cursor: pointer;
+    /*display: flex;
+    justify-content: center;
+    align-items: center; */
+    font-weight: bold;
+}
+
+.user-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #FAF9F6;
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: #0B2545;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #13315C;
+    color: #FFFFFF;
+}
+
+.user-dropdown:hover .dropdown-content {
+    display: block;
+}
+
+
+nav {
+    display: flex;
+    gap: 20px; 
+}
+
+.logo a,
+nav a {
+    text-decoration: none;
+    color: #FAF9F6;
+    transition: all 0.3s ease; /* Smooth transition effect */
+}
+
+.logo a:hover,
+nav a:hover {
+    font-size: 1.2em;  
+}
+
+.logo a.active,
+nav a.active {
+    border-bottom: 2px solid #FAF9F6;
+    font-size: inherit; 
+}
+
+.logo a:not(.active):active,
+nav a:not(.active):active {
+    font-size: 1em; 
+}
+
+.home{
+    background-color: #97d0ff;
+}
+
+main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(95vh - 70px); 
+    padding-top: 70px;
+    /*margin-left: 5%;  */
+}
+
+.content {
+    display: flex;
+    align-items: center;
+    max-width: 90%;
+    text-align: left;
+}
+
+.text-container {
+    max-width: 40%;
+    margin-right: 20px;
+    margin-left: 5%;
+}
+
+
+.image-container {
+    position: relative;
+    /*max-width: 85%;*/
+    height: auto;
+    /*margin-bottom: 20px;  Add some space below the image */
+}
+
+.image{
+    max-width: 85%;
+    font-size: large;
+}
+
+@media screen and (max-width: 768px) {
+    .image-container,
+    .image,
+    .gif {
+        display: none; /* Hide the image and its container on small screens */
+    }
+
+    .text-container {
+        max-width: 100%;
+        text-align: center;
+    }
+}
+
+.button-container {
+    margin-top: 20px; 
+    width:90%;
+}
+
+#mainPageTitle,
+#mainPageSubTitle {
+    margin-bottom: 20px;
+}
+
+#mainPageTitle {
+  font-size: 50px;
+  color: #4472CA;
+}
+
+#mainPageSubTitle{
+  color: #0B2545;
+  font-size: 20px;
+}
+
+footer {
+    /* position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%; */
+    background-color: #0B2545;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    font-size: 25px;
+}
+
+footer a i:hover {
+    font-size: 1.2em;
+    transition: all 0.3s ease; /* Add a smooth transition effect */
+}
+
+.about-container {
+    max-width: 100%;
+    margin:auto;
+    overflow: hidden;
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    grid-gap: 10px;
+    padding: 10px;
+    margin: auto;
+}
+.grid-item {
+    text-align: center;
+    font-size: 20px;
+    letter-spacing: 1px;
+    font-family: 'Montserrat';
+    color: #0B2545;
+    padding: 20px 0;
+}
+
+.grid-item img {
+    max-width: 35%; /* Limit the image to the container's width */
+    height: auto;
+    border-radius: 50%; /* Make the image circular */
+    overflow: hidden; /* Hide the overflow content (corner) to maintain the circular shape */
+}
+
+
+/*
+COLOR PALETTE
+- Mint cream: #EEF4ED
+- Powder Blue: #8DA9C4
+- Oxford Blue: #0B2545
+- Berkeley Blue: #13315C
+- Yale Blue: #134074
+- penguin image: #97d0ff
+*/
