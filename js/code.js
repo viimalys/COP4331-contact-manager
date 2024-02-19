@@ -479,11 +479,11 @@ function doLogout() {
 }
 
 function showAddContactForm() {
-	document.getElementById("addContactForm").style.display = "block";
+	document.getElementById("addContactPopup").style.display = "block";
 }
 
 function hideAddContactForm() {
-	document.getElementById("addContactForm").style.display = "none";
+	document.getElementById("addContactPopup").style.display = "none";
 }
 
 function addContactRow(firstName, lastName, Phone, Email, contactID) {
@@ -684,54 +684,39 @@ function saveContact(id) {
 }
 
 function searchContacts() {
-    tableBody.innerHTML = "";
-
-    let searchTerm = document.getElementById("searchBar").value.trim();
-
-    // If the search term is empty, return and do not perform the search
-    if (searchTerm === "") {
-		refreshContacts();
-        return;
-    }
-
-    let userData = {
-        search: searchTerm,
-    };
-
-    let jsonPayload = JSON.stringify(userData);
-    let url = urlBase + '/Search.' + extension;
-    let xhr = new XMLHttpRequest();
-
-    xhr.open("POST", url, true);
-    xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200) {
-            let jsonData = JSON.parse(xhr.responseText);
-            console.log(jsonData.results);
-            for (let i = 0; i < jsonData.results.length; i++) {
-                let jsonUserIDstr = jsonData.results[i].UserID;
-                let jsonUserIDint = parseInt(jsonUserIDstr, 10);
-                if (userId == jsonUserIDint) {
-                    addContactRow(jsonData.results[i].FirstName, jsonData.results[i].LastName, jsonData.results[i].Phone, jsonData.results[i].Email, jsonData.results[i].UserID);
-                }
-            }
-        }
-    };
-
-    xhr.send(jsonPayload);
+	tableBody = document.getElementById("tableBody");
+	tableBody.innerHTML = "";
+	let searchTerm = document.getElementById("searchBar").value;
+	let userData = {
+		search: searchTerm,
+	};
+	console.log(searchTerm);
+	let jsonPayload = JSON.stringify(userData);
+	let url = urlBase + '/Search.' + extension;
+	let xhr = new XMLHttpRequest();
+	xhr.open("POST", url, true);
+	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
+	xhr.onreadystatechange = function () {
+		if (xhr.readyState == 4) {
+			if (xhr.status == 200) {
+				console.log("Searching")
+				console.log("UID: " + userId);
+				let jsonData = JSON.parse(xhr.responseText);
+				console.log(jsonData.results);
+				console.log(xhr.responseText);
+				for (i = 0; i < jsonData.results.length; i++) {
+					console.log("loop entered");
+					let jsonUserIDstr = jsonData.results[i].UserID;
+					let jsonUserIDint = parseInt(jsonUserIDstr, 10);
+					if (userId == jsonUserIDint) {
+						addContactRow(jsonData.results[i].FirstName, jsonData.results[i].LastName, jsonData.results[i].Phone, jsonData.results[i].Email, jsonData.results[i].UserID);
+					}
+				}
+			}
+		}
+	}
+	xhr.send(jsonPayload);
 }
-
-document.addEventListener("DOMContentLoaded", function() {
-    // Add event listener to the search input field to trigger searchContacts on keyup
-    var searchBar = document.getElementById("searchBar");
-    if (searchBar) {
-        searchBar.addEventListener("keyup", searchContacts);
-    } else {
-        console.error("Element with ID 'searchBar' not found.");
-    }
-});
-
 
 function refreshContacts() {
 	tableBody = document.getElementById("tableBody");

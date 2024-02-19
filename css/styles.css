@@ -16,9 +16,7 @@ COLOR PALETTE
 
 
 */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+
 
 body 
 {
@@ -69,7 +67,7 @@ body
 }
 
 
-#loginDiv, #signupDiv, #registerDiv, #backToLoginDiv {
+#loginDiv, #signupDiv, #registerDiv, #backToLoginDiv{
     margin: 0 auto; 
     margin-bottom: 2vh; 
     border: 2px solid rgba(255, 255, 255, .2);
@@ -82,6 +80,23 @@ body
 
 #loginName, #loginPassword, 
 #firstName, #lastName
+{
+    margin: 1vh auto;
+    max-width: 100%;
+    font-size: 30px;
+    text-align: left;
+    padding-left: 5%;
+    padding-right: 15%;
+    background: transparent;
+    border: none;
+    outline: none;
+    border: 2px solid rgba(255, 255, 255, .2);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .3);
+    border-radius: 40px;
+    color: #FFFFFF;
+}
+
+.newContact
 {
     margin: 1vh auto;
     max-width: 100%;
@@ -131,13 +146,27 @@ body
     border-radius: 10px;
 }
 
-.popup-content {
+.popup-content, #addContactForm{
     background-color: #fefefe;
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
     width: 30%;
 }
+
+
+/*#addContactForm
+{
+    justify-content: center;
+    margin: 0 auto; 
+    margin-bottom: 2vh; 
+    border: 2px solid rgba(255, 255, 255, .2);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    background-color: rgba(102, 204, 255, 0.5);
+    border-radius: 10px;
+    padding: 25px;
+}*/
 
 .close {
     color: #aaa;
@@ -154,10 +183,14 @@ body
 }
 
 .popup-content input[type="text"], h2{
-    font-size: 30px;
+    font-size: 20px;
 }
 
 .popup-content h2, .popup-Button{
+    text-align: center;
+}
+
+#addContactForm h2{
     text-align: center;
 }
 .input-container {
@@ -167,7 +200,7 @@ body
     margin-bottom: 10px; /* Add some spacing between input pairs */
 }
 
-.input-container span {
+.input-container span{
     width: 100px; 
 }
 
@@ -216,8 +249,19 @@ body
     color: rgba(255, 255, 255, 0.3);
 }
 
-::placeholder{
+#loginName::placeholder,
+#loginPassword::placeholder,
+#firstName::placeholder,
+#lastName::placeholder{
     color: rgba(255, 255, 255, 0.7);
+}
+
+::placeholder{
+    color: black;
+}
+
+:focus::placeholder{
+    color: grey;
 }
 
 .search-container{
@@ -235,8 +279,12 @@ body
     font-size: 30px;
 }
 
-#search ::placeholder{
-    color: #333;
+#searchBar{
+    height: 30px;
+}
+
+#search::placeholder{
+    color: #333333;
 }
 
 .password-container {
@@ -285,14 +333,14 @@ body
     color: #FFFFFF;
 }
 
-#contactsDiv
+/* #contactsDiv
 {
     font-size: 30px;
     width: 70%;
     margin-left: 15%;
     padding: 25px;
     background-color: #b2b2b2;
-}
+} */
 
 
 #loggedInDiv
@@ -337,18 +385,44 @@ body
     transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; 
 }
 
-
-#addContactForm
+/* #addContactButton, #addContactForm
 {
-    display: none;
+    flex-grow: 1;
+    margin: auto;
+    margin-top: 15vh;
+    margin-bottom: 5vh;
+    max-width: 50%;
+    text-align: center;
+    font-size: 30px;
+
+} */
+
+
+#addContactButton, #addButton, #cancelButton{
+    display: flex;
+    justify-content: center;
+    align-self: center;
+}
+
+#contactsDiv
+{
+    margin: 0 auto; 
+    margin-bottom: 2vh; 
+    border: 2px solid rgba(255, 255, 255, .2);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    background-color: rgba(102, 204, 255, 0.5);
+    border-radius: 10px;
+    padding: 25px;
 }
 
 #contactsTable
 {
     margin-left: auto;
     margin-right: auto;
-    width: 80%;
+    width: 100%;
     background-color: #EEF4ED;
+    border-radius: 6px;
 }
 
 table, th, td
@@ -373,6 +447,20 @@ tr:hover
     background-color: #8DA9C4;
 }
 
+.deleteButton, .updateButton, .saveButton{
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+}
+
+.tableImages{
+    width: 50px;
+    height: 50px;
+}
+
 #searchText
 {
 	font-size: 30px;
@@ -382,7 +470,7 @@ tr:hover
 	font-size: 30px;
 }
 
-input[type="text"],input[type="password"]{
+input[type="username"],input[type="password"],input[type="text"]{
     border-radius: 25px;
     text-align: center;
     width: 80%;
@@ -390,6 +478,14 @@ input[type="text"],input[type="password"]{
     margin-bottom: 2%;
     font-family: 'Merriweather Sans', sans-serif;
 }
+
+input[type="search"]{
+    border-radius: 25px;
+    text-align: center;
+    width: 80%;
+    font-family: 'Merriweather Sans', sans-serif;
+}
+
 
 #inner-title{
     display: inline-block;

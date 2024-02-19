@@ -9,7 +9,6 @@
     <link href="css/styles.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link href="./output.css" rel="stylesheet">
 </head>
 
 <body class="landing" onload="readContacts(); updateUserInitials();">
@@ -29,7 +28,6 @@
                         <!-- Dropdown content -->
                         <div class="dropdown-content" id="userDropdown">
                             <a href="#" onclick="openProfilePopup()">Profile</a>
-                            <a href="#">Settings</a>
                             <a href="#" onclick="doLogout()">Logout</a>
                         </div>
                     </div>
@@ -38,8 +36,7 @@
         </div>
     </header>
 
-    <div id="landingPopupBox" class="popupBox hidden">
-		
+    <div id="landingPopupBox" class="popupBox hidden">	
 	</div>
 
     <div id="profilePopup" class="popup">
@@ -48,15 +45,15 @@
             <h2>Update Profile</h2>
             <div class="input-container">
                 <span>First Name:</span>
-                <input type="text" id="newFirstName" placeholder="New First Name">
+                <input type="text" id="newFirstName" placeholder="New First Name" oninput="removeFieldError('newFirstName')">
             </div>
             <div class="input-container">
                 <span>Last Name:</span>
-                <input type="text" id="newLastName" placeholder="New Last Name">
+                <input type="text" id="newLastName" placeholder="New Last Name" oninput="removeFieldError('newLastName')">
             </div>
             <div class="input-container">
                 <span>Username:</span>
-                <input type="text" id="newUsername" placeholder="New Username">
+                <input type="text" id="newUsername" placeholder="New Username" oninput="removeFieldError('newUsername')">
             </div>
            
             <div class="popup-Button">
@@ -64,58 +61,55 @@
                 <span id="profileUpdateResult"></span>
             </div>
 
+        </div>  
+    </div>
+    
+    <div id="addContactPopup" class="popup">
+        <div id="addContactForm">
+            <span class="close" onclick="hideAddContactForm()">&times;</span>
+            <h2>Add New Contact</h2>
+            <div class="input-container">
+                <span>First Name:</span>
+                <input type="text" id="firstNameInput" class="newContact" placeholder="Enter First Name Here..." name="firstNameInput" required>
+            </div>
+
+            <div class="input-container">
+                <span>Last Name:</span>
+                <input type="text" id="lastNameInput" class="newContact" placeholder="Enter Last Name Here..." name="lastNameInput" required>
+            </div>
+
+            <div class="input-container">
+                <span>Phone #:</span>
+                <input type="text" id="phoneInput" class="newContact" placeholder="Enter Phone Number Here..." name="phoneInput" required>
+            </div>
+            <div class="input-container">
+                <span>Email:</span>
+                <input type="text" id="emailInput" class="newContact" placeholder="Enter Email Address Here..." name="emailInput" required>
+            </div>
+            <button type="button" id="addButton" class="buttons" onclick="addContact()">Add Contact</button>
+            <!--<button type="button" id="cancelButton" class="buttons" onclick="hideAddContactForm()">Cancel</button>-->
         </div>
-        
     </div>
 
     <div class="landing-content">
         <div class="search-container">
-            <input onchange="searchContacts()" type="text" id="searchBar" placeholder="Search Contacts">
+            <input type="search" id="searchBar" placeholder="Search Contacts">
             <span class="search-icon"><i class='bx bx-search-alt-2' style='color:#333333'></i></span>
         </div>
-        <div id="featureButtons">
-            <button type="button" id="addContactButton" class="buttons" onclick="showAddContactForm()">Add New
-                Contact</button>
-        </div>
-        <div id="addContactForm">
-            <div id="First Name"><b>First Name</b>
-                <input id="firstNameInput" placeholder="Enter First Name" name="firstNameInput" required>
-            </div>
 
-            <div id="Last Name"><b>Last Name</b>
-                <input id="lastNameInput" placeholder="Enter Last Name" name="lastNameInput" required>
-            </div>
+        <button type="button" id="addContactButton" class="buttons" onclick="showAddContactForm()">Add New Contact</button>
 
-            <div id="phone"><b>Phone</b>
-                <input id="phoneInput" placeholder="Enter Phone Number" name="phoneInput" required>
-            </div>
-            <div id="email"><b>Email</b>
-                <input id="emailInput" placeholder="Enter Email Address" name="emailInput" required>
-            </div>
-            <button type="submit" class="buttons" onclick="addContact()">Add Contact</button>
-            <button type="reset" class="buttons" onclick="hideAddContactForm()">Cancel</button>
-        </div>
-        <!--
-            <div id="updateContactForm">
-            <div id="updatedFirstName"></div><b>First Name</b>
-                <input id="newFirstNameInput" placeholder="Enter New First Name" name="newFirstNameInput" required>
-            <div id="updatedLastName"></div><b>Last Name</b>
-                <input id="newLastNameinput" placeholder="Enter New Last Name" name="newLastNameinput" required>
-            <div id="updatedPhone"></div><b>Phone</b>
-                <input id="newPhoneInput" placeholder="Enter New Phone" name="newPhoneInput" required>
-            <div id="updatedEmail"></div><b>Email</b>
-                <input id="newEmailInput" placeholder="Enter New Email" name="newEmailInput" required>
-        </div>
-        -->
         <div id="contactsDiv">
             <table id="contactsTable">
-                <tr>
-                    <th>First</th>
-                    <th>Last</th>
-                    <th>Phone</th>
-                    <th>Email</th>
-                    <th>Buttons</th>
-                </tr>
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                        <th></th>
+                    </tr>
+                </thead>
                 <tbody id="tableBody">
                 </tbody>
             </table>
